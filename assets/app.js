@@ -119,11 +119,14 @@
   })();
 
   /* ---------- Home: selected publications ----------
-   * Drafts stay off the Home page; Publications & Tools still lists them. */
+   * The four most recent, newest first. Drafts stay off the Home page;
+   * Publications & Tools still lists them. */
   (function latest() {
     const host = $('#latestPubs');
     if (!host) return;
-    host.innerHTML = H.publications.filter(function (p) { return p.year !== 'Draft'; }).map(rowHTML).join('');
+    host.innerHTML = H.publications.filter(function (p) { return p.year !== 'Draft' && p.issued; })
+      .sort(function (a, b) { return a.issued < b.issued ? 1 : a.issued > b.issued ? -1 : 0; })
+      .slice(0, 4).map(rowHTML).join('');
   })();
 
   /* ---------- Publications & Tools: search plus two filters, with deep links ----------

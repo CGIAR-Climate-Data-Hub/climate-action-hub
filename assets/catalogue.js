@@ -26,6 +26,7 @@
  *   geo         region or country label
  *   url         where the item lives; the site links to it and copies nothing
  *   verified    where the metadata came from, and when
+ *   issued      publication date as ISO (YYYY-MM-DD, or YYYY-MM), used to order publications
  *   tags        words the search also looks in
  * ============================================================================ */
 window.HUB = (function () {
@@ -108,15 +109,78 @@ window.HUB = (function () {
 
   /* ---------- Publications ---------- */
   const publications = [
+    { id: 'p4', type: 'publication', kind: 'Brief', title: 'Financing the Last Mile: An Investment Case for Early Warnings for All',
+      provider: 'IWMI', aow: 'aow5', lens: 'adaptation', geo: 'Bangladesh, India, Japan, Kazakhstan', year: 'November 2026', issued: '2026-11-06',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'PDF',
+      url: 'https://doi.org/10.5337/2026.233', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: 'Why financing for early warning systems lags behind their proven returns, drawing on more than seventy practitioners and global data to October 2026.',
+      tags: ['early warning', 'investment case', 'climate finance', 'disaster risk'] },
+
+    { id: 'p5', type: 'publication', kind: 'Editorial', title: 'Agriculture and food systems at a critical climate juncture',
+      provider: 'PLOS Climate', aow: 'aow1', lens: 'cross', geo: 'Global', year: 'November 2026', issued: '2026-11-04',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'Journal article',
+      url: 'https://doi.org/10.1371/journal.pclm.0001094', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: "A research agenda for PLOS Climate's Agriculture and Food Systems section, from climate impacts across food production to equity in food system transformation.",
+      tags: ['food systems', 'research agenda', 'adaptation', 'mitigation'] },
+
+    { id: 'p6', type: 'publication', kind: 'Journal article', title: "A bottom-up quantification of greenhouse gas emissions and mitigation potential in Kenya's crop and livestock systems",
+      provider: 'Frontiers in Climate', aow: 'aow4', lens: 'mitigation', geo: 'Kenya', year: 'October 2026', issued: '2026-10-21',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'Journal article',
+      url: 'https://doi.org/10.3389/fclim.2026.1920404', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: "County-level estimates for Kenya's major crop and livestock systems: agriculture emitted 26.74 Mt CO2e in 2021, 86 percent of it from livestock.",
+      tags: ['greenhouse gas', 'emissions', 'mitigation', 'livestock', 'crops', 'inventory'] },
+
+    { id: 'p7', type: 'publication', kind: 'Journal article', title: 'Coordinating assessment of climate adaptation and methane mitigation in rice production systems',
+      provider: 'Environmental Research Letters', aow: 'aow4', lens: 'cross', geo: 'Asia', year: 'October 2026', issued: '2026-10-06',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'Journal article',
+      url: 'https://doi.org/10.1088/1748-9326/aeac6d', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: 'How to assess adaptation and methane mitigation together in rice, where flooded paddies both buffer climate extremes and produce methane.',
+      tags: ['rice', 'methane', 'mitigation', 'adaptation', 'water management'] },
+
+    { id: 'p8', type: 'publication', kind: 'Brief', title: 'From agribusiness support to carbon-finance readiness: Agribusiness Facility for Africa (ABF)',
+      provider: 'CGIAR, via CGSpace', aow: 'aow5', lens: 'mitigation', geo: 'Africa', year: 'October 2026', issued: '2026-10',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'PDF',
+      url: 'https://cgspace.cgiar.org/items/7ab9411a-ff59-48aa-8f9b-647b3ac02dda', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: 'How the Agribusiness Facility for Africa is adding carbon-finance readiness, from mitigation screening to cost-benefit analysis, to its support for agribusinesses.',
+      tags: ['carbon finance', 'agribusiness', 'mitigation', 'investment readiness'] },
+
+    { id: 'p9', type: 'publication', kind: 'Journal article', title: 'Locally led climate adaptation: Business unusual for agricultural research',
+      provider: 'PLOS Climate', aow: 'aow3', lens: 'adaptation', geo: 'Global', year: 'May 2026', issued: '2026-05-04',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'Journal article',
+      url: 'https://doi.org/10.1371/journal.pclm.0000910', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: "Argues for agricultural research that puts affected communities' own priorities at the centre of adaptation, building on the eight principles for locally led adaptation.",
+      tags: ['locally led adaptation', 'equity', 'agricultural research'] },
+
+    { id: 'p10', type: 'publication', kind: 'Working paper', title: 'Opportunities for a low-emission transformation of African food systems',
+      provider: 'CIFOR-ICRAF', aow: 'aow4', lens: 'mitigation', geo: 'Africa', year: 'January 2026', issued: '2026-01-20',
+      resolution: null, temporal: null, cadence: null, licence: 'CC BY 4.0', formats: 'PDF',
+      url: 'https://doi.org/10.17528/cifor-icraf/009428', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: 'A continent-wide overview of food system emissions in Africa, from FAOSTAT and national UNFCCC inventories, with no-regret mitigation priorities that support food security.',
+      tags: ['food systems', 'emissions', 'mitigation', 'low-emission', 'inventory'] },
+
+    { id: 'p11', type: 'publication', kind: 'Technical report', title: 'A bottom-up framework for assessing greenhouse gas emissions and mitigation potential in food systems',
+      provider: 'IITA, via CGSpace', aow: 'aow4', lens: 'mitigation', geo: '', year: 'December 2025', issued: '2025-12-31',
+      resolution: null, temporal: null, cadence: null, licence: 'Open access', formats: 'PDF',
+      url: 'https://cgspace.cgiar.org/items/668e797c-0d4c-4279-83d4-c1c0762b5000', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: 'A framework for bottom-up accounting of food system emissions, to show local hotspots and guide subnational mitigation where national inventories rely on default emission factors.',
+      tags: ['greenhouse gas', 'emissions', 'mitigation', 'framework', 'inventory'] },
+
+    { id: 'p12', type: 'publication', kind: 'Perspective', title: 'From project portfolios to institutional strategy: mainstreaming climate resilience in agricultural research at CGIAR',
+      provider: 'Frontiers in Sustainable Food Systems', aow: 'aow1', lens: 'cross', geo: 'Africa', year: 'December 2025', issued: '2025-12-17',
+      resolution: null, temporal: null, cadence: null, licence: 'Open access', formats: 'Journal article',
+      url: 'https://doi.org/10.3389/fsufs.2025.1728611', verified: 'Read from CGSpace and the DOI record, 17/11/2026',
+      blurb: "A four-method framework (discourse analysis, publication review, interviews and stakeholder mapping) for reorienting a research portfolio towards climate resilience, applied to IITA's 2013 to 2025 climate portfolio.",
+      tags: ['climate resilience', 'research portfolio', 'mainstreaming', 'strategy'] },
+
     { id: 'p1', type: 'publication', kind: 'Journal article', title: 'Expert agreement on key elements of transformational adaptation to climate risks',
-      provider: 'Nature Climate Change', author: 'Biesbroek et al.', aow: 'aow3', lens: 'adaptation', geo: 'Global', year: 'February 2026',
+      provider: 'Nature Climate Change', author: 'Biesbroek et al.', aow: 'aow3', lens: 'adaptation', geo: 'Global', year: 'February 2026', issued: '2026-02',
       resolution: null, temporal: null, cadence: null, licence: 'Publisher terms', formats: 'Journal article',
       url: 'https://www.nature.com/articles/s41558-025-02548-y', verified: V_V02,
       blurb: 'Expert elicitation on what distinguishes transformational from incremental adaptation.',
       tags: ['transformational adaptation', 'expert elicitation'] },
 
     { id: 'p2', type: 'publication', kind: 'Flagship report', title: 'Global Food Policy Report 2025: Food policy lessons and priorities for a changing world',
-      provider: 'IFPRI, via CGSpace', author: 'IFPRI', aow: 'aow5', lens: 'cross', geo: 'Global', year: 'May 2025',
+      provider: 'IFPRI, via CGSpace', author: 'IFPRI', aow: 'aow5', lens: 'cross', geo: 'Global', year: 'May 2025', issued: '2025-05',
       resolution: null, temporal: null, cadence: 'Annual', licence: 'Open access', formats: 'PDF',
       url: 'https://cgspace.cgiar.org/items/f4fbb62c-f8df-4734-8a95-2ce35f5f9904', verified: V_V02,
       blurb: "IFPRI's annual assessment of food policy priorities.",
