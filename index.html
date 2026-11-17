@@ -10,6 +10,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet" media="all" onerror="this.remove()">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CGIAR Climate Action Hub">
+<meta property="og:title" content="CGIAR Climate Action Hub">
+<meta property="og:description" content="The evidence behind the CGIAR Climate Action Science Program: datasets, publications, tools and methods, curated as one front door.">
+<meta property="og:url" content="https://cgiar-climate-data-hub.github.io/climate-action-hub/">
+<meta property="og:image" content="https://cgiar-climate-data-hub.github.io/climate-action-hub/assets/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ripening maize below the Rift Valley escarpment in Kenya, with the CGIAR Climate Action Hub name">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -28,7 +40,7 @@
     <a class="ctab" href="resources.html">Resources &amp; Data</a>
     <a class="ctab" href="about.html">About &amp; Contact</a>
     <a class="ctab ctab-hub" href="https://cgiar-climate-data-hub.github.io/" target="_blank" rel="noopener">Climate Data Hub <span aria-hidden="true">&#8599;</span></a>
-    <form class="ctab-search" role="search" action="resources.html" method="get">
+    <form class="ctab-search" role="search" aria-label="Site search" action="resources.html" method="get">
       <label class="sr-only" for="navq">Search the Hub</label>
       <input id="navq" name="q" type="search" placeholder="Search the Hub" autocomplete="off">
       <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 L21 21"/></svg></button>
@@ -40,16 +52,15 @@
 <main id="main" tabindex="-1">
 
 <div class="chero chero-short">
-  <img class="chero-img" src="assets/img/hero-sahel.jpg"
-       alt="A farmer preparing planting pits using innovative farming practices in the Sahel">
-  <div class="chero-caption" id="cap-hero"></div>
+  <img class="chero-img" src="assets/img/hero-rift-valley-maize.jpg"
+       alt="Ripening maize below the Rift Valley escarpment, Kenya">
 </div>
 <div class="chero-words">
   <div class="chero-words-in">
-    <p class="chero-mission">The evidence behind CGIAR&rsquo;s climate work, in one place</p>
+    <h1 class="chero-mission">The evidence behind CGIAR&rsquo;s climate work, in one place</h1>
     <p class="chero-sub">Datasets, publications, tools and methods for the CGIAR Climate Action Science Program,
     each linked to where it lives.</p>
-    <form class="herosearch" role="search" action="resources.html" method="get">
+    <form class="herosearch" role="search" aria-label="Search the catalogue" action="resources.html" method="get">
       <label class="sr-only" for="q">Search the catalogue</label>
       <input type="search" id="q" name="q" placeholder="Search">
       <button type="submit">Search</button>
@@ -110,15 +121,14 @@
 </section>
 
 <div class="photoband">
-  <img src="assets/img/banner-harvest.jpg" alt="Harvesting season in Nyando climate-smart villages">
-  <div class="photoband-cap" id="cap-banner"></div>
+  <img src="assets/img/band-lake-naivasha.jpg" alt="Dead trees standing in the risen waters of Lake Naivasha, Kenya">
 </div>
 
 <section class="section">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-label">Recent</div>
-      <h2>Latest publications</h2>
+      <div class="section-label">Publications</div>
+      <h2>Selected publications</h2>
     </div>
     <div class="rows" id="latestPubs"></div>
     <p style="margin-top:18px">
@@ -131,6 +141,7 @@
 
 <footer>
   <div class="footer-inner">
+    <h2 class="sr-only">Site links</h2>
     <div class="footer-top">
       <div>
         <img src="assets/cgiar-logo.png" alt="CGIAR Climate Action" height="42">
@@ -162,8 +173,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2026 CGIAR. Photographs are Creative Commons and credited in their captions. Linked content
-      stays under its own licence.</span>
+      <span>&copy; 2026 CGIAR. Photographs by John Choptiany. Linked content stays under its own licence.</span>
       <span>Beta, 17/11/2026</span>
     </div>
   </div>

@@ -345,16 +345,9 @@ window.HUB = (function () {
       .map(function (r) { return r.item; });
   }
 
-  /* Photograph credits, shown as captions on the Home page. Both images are
-     Creative Commons from CGIAR Climate's Flickr account. */
-  const credits = {
-    'hero-sahel.jpg':     '"Innovative farming practices in the Sahel" by CGIAR Climate / Flickr / CC BY-NC-SA 2.0',
-    'banner-harvest.jpg': '"Harvesting season in Nyando climate-smart villages" by CGIAR Climate / Flickr / CC BY-NC-SA 2.0'
-  };
-
   return {
     datasets: datasets, publications: publications, methods: methods, innovations: innovations,
-    all: all, byId: byId, AREAS: AREAS, TARGETS: TARGETS, credits: credits,
+    all: all, byId: byId, AREAS: AREAS, TARGETS: TARGETS,
     LENS_LABEL: LENS_LABEL, TYPE_LABEL: TYPE_LABEL, TYPE_PLURAL: TYPE_PLURAL,
     META_FIELDS: META_FIELDS, completeness: completeness, areaById: areaById, search: search
   };

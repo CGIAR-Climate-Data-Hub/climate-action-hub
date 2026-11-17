@@ -63,14 +63,6 @@
     '</' + tag + '>';
   }
 
-  /* ---------- Home: photograph credits ---------- */
-  (function credits() {
-    [['#cap-hero', 'hero-sahel.jpg'], ['#cap-banner', 'banner-harvest.jpg']].forEach(function (pair) {
-      const el = $(pair[0]);
-      if (el && H.credits[pair[1]]) el.textContent = H.credits[pair[1]];
-    });
-  })();
-
   /* ---------- Home: the program's published targets ---------- */
   (function targets() {
     const host = $('#targets');
@@ -91,9 +83,7 @@
       { type: 'method',      name: 'Tools and methods', desc: 'Tutorials, manuals and notebooks: how to do the work, not only what exists.' }
     ];
     host.innerHTML = doors.map(function (d) {
-      const n = H.all.filter(function (i) { return i.type === d.type; }).length;
       return '<a class="typecard" href="resources.html?type=' + esc(d.type) + '">' +
-        '<div class="typecard-n">' + n + '</div>' +
         '<div class="typecard-name">' + esc(d.name) + '</div>' +
         '<div class="typecard-desc">' + esc(d.desc) + '</div>' +
         '<span class="typecard-go">Browse &rarr;</span></a>';
@@ -125,11 +115,12 @@
     host.innerHTML = pick.map(cardHTML).join('');
   })();
 
-  /* ---------- Home: latest publications ---------- */
+  /* ---------- Home: selected publications ----------
+   * Drafts stay off the Home page; Resources & Data still lists them. */
   (function latest() {
     const host = $('#latestPubs');
     if (!host) return;
-    host.innerHTML = H.publications.map(rowHTML).join('');
+    host.innerHTML = H.publications.filter(function (p) { return p.year !== 'Draft'; }).map(rowHTML).join('');
   })();
 
   /* ---------- Resources: search plus two filters, with deep links ----------

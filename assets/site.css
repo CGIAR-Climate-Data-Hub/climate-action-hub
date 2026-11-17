@@ -175,12 +175,6 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
   display: block; width: 100%; height: clamp(240px, 34vw, 400px);
   object-fit: cover; object-position: center 55%;
 }
-.chero-caption {
-  position: absolute; right: 0; bottom: 0;
-  background: rgba(10,31,61,.82); color: #E7EEF9;
-  font-size: 10.5px; line-height: 1.4; padding: 5px 10px;
-  max-width: 100%;
-}
 .chero-words { background: #fff; }
 .chero-words-in { max-width: 860px; margin: 0 auto; padding: 40px 24px 34px; text-align: center; }
 .chero-mission {
@@ -194,10 +188,6 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
 }
 .photoband { position: relative; margin: 0; }
 .photoband img { display: block; width: 100%; height: clamp(150px, 20vw, 240px); object-fit: cover; }
-.photoband-cap {
-  position: absolute; right: 0; bottom: 0;
-  background: rgba(10,31,61,.8); color: #E7EEF9; font-size: 10.5px; padding: 5px 10px;
-}
 @media (max-width: 640px) {
 
   .ctabs-in { padding: 0 16px; gap: 0; }
@@ -283,7 +273,7 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
 }
 
 @media print { .ctabs { display: none !important; } }
-.chero-short .chero-img { height: clamp(220px, 32vw, 380px); }
+.chero-short .chero-img { height: clamp(220px, 32vw, 380px); object-position: 50% 72%; }
 .herosearch { display: flex; gap: 8px; flex-wrap: wrap; max-width: 620px; margin: 22px auto 0; }
 .herosearch input[type="search"] {
   flex: 1; min-width: 200px; font: inherit; font-size: 15.5px; padding: 13px 16px;
@@ -305,7 +295,6 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
   padding: 22px 22px 20px; min-width: 0;
 }
 a.typecard:hover { background: var(--blue-50); border-color: var(--blue-800); }
-.typecard-n { font-family: var(--font-serif); font-size: 2rem; line-height: 1; color: var(--blue-900); }
 .typecard-name { font-size: 17px; font-weight: 700; color: var(--blue-900); margin: 8px 0 6px; }
 .typecard-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
 .typecard-go { display: inline-block; margin-top: 12px; font-size: 13.5px; font-weight: 700; color: var(--blue-800); }
@@ -366,3 +355,6 @@ a.aowrow { color: inherit; text-decoration: none; }
 a.aowrow:hover { background: var(--blue-100); }
 a.aowrow:hover .aowrow-name { text-decoration: underline; }
 a.aowrow:focus-visible { outline: 2px solid var(--blue-800); outline-offset: 2px; }
+
+.chero-mission { text-wrap: balance; }
+.photoband img { object-position: 50% 45%; }

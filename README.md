@@ -8,7 +8,7 @@ This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. T
 
 | Page | Contents |
 |---|---|
-| `index.html` (Home) | Photograph, mission line and search, the program's published targets, three ways in by resource type, the five areas of work, the Climate Data Hub call-out, four foundational climate records, latest publications |
+| `index.html` (Home) | Photograph, main heading and search, the program's published targets, three ways in by resource type, the five areas of work, the Climate Data Hub call-out, four foundational climate records, latest publications |
 | `resources.html` (Resources & Data) | The whole catalogue behind one search field and two filters, resource type and area of work |
 | `about.html` (About & Contact) | The program, quoted from cgiar.org, a count of what is catalogued (worked out when the page loads), and how to get in touch |
 
@@ -20,11 +20,13 @@ Three link parameters work on Resources & Data, so other pages can send people s
 
 ```
 index.html, resources.html, about.html
-assets/catalogue.js    every item on the site, the five areas of work, the targets and the photograph credits
+assets/catalogue.js    every item on the site, the five areas of work and the targets
 assets/app.js          puts the catalogue on the pages
 assets/site.css        all the styles
 assets/cgiar-logo.png  the CGIAR Climate Action logo
-assets/img/            two Creative Commons photographs, credited on screen
+assets/img/            two photographs by John Choptiany (location data removed)
+assets/favicon.png, apple-touch-icon.png, social-card.jpg   tab icon, phone icon and the preview card for shared links
+404.html               the page shown for a mistyped address (its links are absolute, so it works at any depth)
 ```
 
 ## Making changes
@@ -43,7 +45,7 @@ In the repository, go to Settings, then Pages, and choose "Deploy from a branch"
 - `climate@cgiar.org` is the only contact address on the site. Please confirm someone reads it.
 - There is a `<meta name="robots" content="noindex, nofollow">` line in each page, so search engines leave the beta alone. Remove that line from all three pages once the site is at its final address.
 - There is no analytics. If visit counts are wanted to plan the next version, add a CGIAR-owned, cookie-free analytics account once the final address is known.
-- Both photographs are CC BY-NC-SA 2.0 (NonCommercial). That suits a program site, but check before any sponsored or commercial use.
+- Both photographs are John Choptiany's, used with his agreement and credited in the footer. Ask him before reusing them elsewhere.
 - The "Sign in" link at the right of the tab bar opens the contact section. The internal operating system it is meant to lead to is not part of this site.
 - The repository has no licence file yet. The owners should choose one.
 
