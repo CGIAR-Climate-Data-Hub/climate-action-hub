@@ -24,7 +24,14 @@
     return '<span class="lens lens-' + lens + '">' + esc(H.LENS_LABEL[lens]) + '</span>';
   }
 
-  /* A card: used for datasets, tools and the Resources list. */
+  /* The CGIAR centres behind an item, from its catalogue record. */
+  function centresHTML(item) {
+    if (!item.centres || !item.centres.length) return '';
+    return '<div class="item-centres">' + (item.centres.length === 1 ? 'Centre: ' : 'Centres: ') +
+      item.centres.map(esc).join(', ') + '</div>';
+  }
+
+  /* A card: used for tools, methods and the Publications & Tools list. */
   function cardHTML(item) {
     const tag = item.url ? 'a' : 'div';
     const attrs = item.url ? ' href="' + esc(item.url) + '" target="_blank" rel="noopener"' : '';
@@ -41,7 +48,7 @@
         '<span class="card-kind">' + esc(item.kind) + '</span></div>' +
       '<div class="card-title">' + esc(item.title) + '</div>' +
       '<div class="card-blurb">' + esc(item.blurb) + '</div>' +
-      specHTML +
+      specHTML + centresHTML(item) +
       '<div class="card-foot"><span>' + esc(item.provider || '') +
         (item.year ? ' &middot; ' + esc(item.year) : '') + '</span><span class="go">' +
         (item.url ? 'Open &#8599;' : 'No link yet') + '</span></div>' +
@@ -57,7 +64,7 @@
         '<div class="row-title">' + esc(item.title) + '</div>' +
         '<div class="row-meta">' + esc(H.TYPE_LABEL[item.type]) + ' &middot; ' + esc(item.kind) +
           ' &middot; ' + esc(item.provider || '') + (item.year ? ' &middot; ' + esc(item.year) : '') + '</div>' +
-        '<div class="row-blurb">' + esc(item.blurb) + '</div>' +
+        '<div class="row-blurb">' + esc(item.blurb) + '</div>' + centresHTML(item) +
       '</div>' +
       '<div class="row-side">' + lensChip(item.lens) + '</div>' +
     '</' + tag + '>';
@@ -186,8 +193,16 @@
     }).filter(function (r) { return r[1] > 0; });
     host.innerHTML = '<div class="tablescroll"><table class="plain"><tbody>' +
       rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + r[1] + '</td></tr>'; }).join('') +
-      '</tbody></table></div>';
+      '<tr><td>CGIAR centres with work listed here</td><td>' + centreList().length + '</td></tr>' +
+      '</tbody></table></div>' +
+      '<p class="src">Centres: ' + centreList().map(esc).join(', ') + '. Taken from the authors&rsquo; affiliations on each record.</p>';
   })();
+
+  function centreList() {
+    const seen = {};
+    H.all.forEach(function (i) { (i.centres || []).forEach(function (c) { seen[c] = true; }); });
+    return Object.keys(seen).sort(function (a, b) { return a.localeCompare(b); });
+  }
 
   /* ---------- Any stated catalogue size is recounted at load ---------- */
   (function corpusSize() {

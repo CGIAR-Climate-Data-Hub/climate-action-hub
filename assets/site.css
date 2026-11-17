@@ -362,3 +362,5 @@ a.aowrow:focus-visible { outline: 2px solid var(--blue-800); outline-offset: 2px
 .pagephoto img { display: block; width: 100%; object-fit: cover; }
 .pagephoto-strip img { height: clamp(110px, 15vw, 200px); object-position: 50% 40%; }
 .pagephoto-wide img { height: clamp(150px, 22vw, 300px); object-position: 50% 44%; }
+.item-centres { font-size: 12px; color: var(--text-3); margin-top: 6px; }
+.card .item-centres { margin: 2px 0 8px; }
