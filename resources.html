@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources and data | CGIAR Climate Action Hub</title>
+<meta name="description" content="Search and filter the catalogue of publications, datasets, tools and methods behind the CGIAR Climate Action Science Program.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet" media="all" onerror="this.remove()">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand-link" aria-label="CGIAR Climate Action Hub home">
+      <img src="assets/cgiar-logo.png" alt="" height="34">
+      <span class="brand-name">CGIAR Climate Action Hub</span>
+    </a>
+  </div>
+</header>
+<nav class="ctabs" aria-label="Main navigation">
+  <div class="ctabs-in">
+    <a class="ctab" href="index.html">Home</a>
+    <a class="ctab" href="resources.html" aria-current="page">Resources &amp; Data</a>
+    <a class="ctab" href="about.html">About &amp; Contact</a>
+    <a class="ctab ctab-hub" href="https://cgiar-climate-data-hub.github.io/" target="_blank" rel="noopener">Climate Data Hub <span aria-hidden="true">&#8599;</span></a>
+    <form class="ctab-search" role="search" action="resources.html" method="get">
+      <label class="sr-only" for="navq">Search the Hub</label>
+      <input id="navq" name="q" type="search" placeholder="Search the Hub" autocomplete="off">
+      <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 L21 21"/></svg></button>
+    </form>
+    <a class="ctab ctab-signin" href="about.html#contact" title="Operating system, for program staff">Sign in</a>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+<div class="pagehead">
+  <div class="wrap">
+    <div class="section-label">Resources &amp; Data</div>
+    <h1>Publications, data, tools and methods</h1>
+    <p>Everything catalogued, behind one search field and two filters. Search needs every word to appear, so a
+    phrase narrows rather than widens. The full record of each item lives with its publisher; this page links to it
+    rather than copying it.</p>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="wrap filters-in">
+    <label class="sr-only" for="fq">Search</label>
+    <input type="search" id="fq" placeholder="Search the catalogue">
+    <label class="sr-only" for="fType">Resource type</label>
+    <select id="fType">
+      <option value="all">All resource types</option>
+      <option value="publication">Publications</option>
+      <option value="dataset">Datasets</option>
+      <option value="method">Tools and methods</option>
+      <option value="innovation">Innovation catalogues</option>
+    </select>
+    <label class="sr-only" for="fArea">Area of work</label>
+    <select id="fArea"><option value="all">All areas of work</option></select>
+    <button class="ghostbtn" id="fReset" type="button">Reset</button>
+    <span class="resultcount" id="rCount"></span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div id="rResults"></div>
+    <p class="src" style="margin-top:22px">Every entry was either carried over from the earlier prototype, where its
+    link had already been checked, or read from the provider&rsquo;s own page on 10/08/2026. Fields nobody has
+    recorded are left empty rather than filled in. The complete records live in
+    <a href="https://cgspace.cgiar.org/" target="_blank" rel="noopener">CGSpace</a> and
+    <a href="https://gardian.cgiar.org/" target="_blank" rel="noopener">Gardian</a>; the data itself is on the
+    <a href="https://cgiar-climate-data-hub.github.io/" target="_blank" rel="noopener">Climate Data Hub</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <img src="assets/cgiar-logo.png" alt="CGIAR Climate Action" height="42">
+        <p>The evidence behind the CGIAR Climate Action Science Program: datasets, publications, tools and
+        methods, curated as one front door and linked to where each lives.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="index.html">Home</a>
+        <a href="resources.html">Resources and data</a>
+        <a href="about.html">About and contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Go deeper</h3>
+        <a href="https://cgiar-climate-data-hub.github.io/" target="_blank" rel="noopener">Climate Data Hub &#8599;</a>
+        <a href="https://cgspace.cgiar.org/" target="_blank" rel="noopener">CGSpace &#8599;</a>
+        <a href="https://gardian.cgiar.org/" target="_blank" rel="noopener">Gardian &#8599;</a>
+      </div>
+      <div class="footer-col">
+        <h3>Program</h3>
+        <a href="https://www.cgiar.org/cgiar-research-portfolio-2025-2030/climate-action" target="_blank" rel="noopener">CGIAR Climate Action &#8599;</a>
+        <a href="https://www.linkedin.com/showcase/cgiar-climate/" target="_blank" rel="noopener">Climate Action on LinkedIn &#8599;</a>
+        <a href="https://www.cgiar.org/funders" target="_blank" rel="noopener">CGIAR Trust Fund Contributors &#8599;</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <a href="mailto:climate@cgiar.org">climate@cgiar.org</a>
+        <a href="about.html#contact">How to reach the program</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 CGIAR. Photographs are Creative Commons and credited in their captions. Linked content
+      stays under its own licence.</span>
+      <span>Beta, 17/11/2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/catalogue.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
