@@ -18,6 +18,20 @@
     });
   };
   const plural = function (n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); };
+  const dmy = function (iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : '';
+  };
+
+  /* The newest open-access Climate Action journal articles on CGSpace, from
+   * archive.js. They are searched, never listed on their own, and come after the
+   * hand-picked items. CGSpace records no area of work, so they have none here. */
+  const ARCHIVE_READ = (window.HUB_ARCHIVE && window.HUB_ARCHIVE.read) || '';
+  const ARCHIVE = ((window.HUB_ARCHIVE && window.HUB_ARCHIVE.items) || []).map(function (r) {
+    return { id: r.id, type: 'publication', kind: 'Journal article', title: r.title, provider: r.journal,
+      year: String(r.issued || '').slice(0, 4), issued: r.issued, url: r.url,
+      centres: r.centres, geo: r.geo, tags: r.tags };
+  });
 
   function lensChip(lens) {
     if (!lens || !H.LENS_LABEL[lens]) return '';
@@ -68,6 +82,17 @@
       '</div>' +
       '<div class="row-side">' + lensChip(item.lens) + '</div>' +
     '</' + tag + '>';
+  }
+
+  /* A row for a CGSpace article in search results. */
+  function archiveRowHTML(item) {
+    const meta = [item.kind, item.provider, item.year].filter(Boolean).map(esc).join(' &middot; ');
+    return '<a class="row" href="' + esc(item.url) + '" target="_blank" rel="noopener">' +
+      '<div class="row-main">' +
+        '<div class="row-title">' + esc(item.title) + '</div>' +
+        '<div class="row-meta">' + meta + '</div>' + centresHTML(item) +
+      '</div>' +
+    '</a>';
   }
 
   /* ---------- Home: the program's published targets ---------- */
@@ -164,14 +189,41 @@
     function run() {
       const q = qIn.value.trim();
       let items = q ? H.search(q) : H.all;
-      if (typeSel.value !== 'all') items = items.filter(function (i) { return i.type === typeSel.value; });
-      if (areaSel.value !== 'all') items = items.filter(function (i) { return i.aow === areaSel.value; });
+      let more = q ? H.search(q, ARCHIVE) : [];
+      if (typeSel.value !== 'all') {
+        items = items.filter(function (i) { return i.type === typeSel.value; });
+        more = more.filter(function (i) { return i.type === typeSel.value; });
+      }
+      const outsideArea = areaSel.value !== 'all' ? more.length : 0;
+      if (areaSel.value !== 'all') {
+        items = items.filter(function (i) { return i.aow === areaSel.value; });
+        more = [];
+      }
       const area = H.areaById(areaSel.value);
-      count.textContent = plural(items.length, 'resource') + (area ? ' under ' + area.name : '');
-      out.innerHTML = items.length
-        ? '<div class="cards">' + items.map(cardHTML).join('') + '</div>'
-        : '<div class="empty"><strong>Nothing matches.</strong> Every search word has to appear in an item, so try ' +
+      count.textContent = plural(items.length, 'resource') + (area ? ' under ' + area.name : '') +
+        (more.length ? ', plus ' + plural(more.length, 'CGSpace article') : '');
+
+      let html = '';
+      if (items.length) {
+        html = '<div class="cards">' + items.map(cardHTML).join('') + '</div>';
+      } else if (more.length) {
+        html = '<div class="empty"><strong>No hand-picked item matches.</strong> The CGSpace articles below do.</div>';
+      } else {
+        html = '<div class="empty"><strong>Nothing matches.</strong> Every search word has to appear in an item, so try ' +
           'one word rather than a phrase, or clear a filter.</div>';
+      }
+      if (more.length) {
+        html += '<div class="morehead"><h2>From CGSpace</h2>' +
+          '<p>' + more.length + (more.length === 1 ? ' match' : ' matches') + ' among the newest ' + ARCHIVE.length +
+          ' open-access journal articles tagged Climate Action on CGSpace' +
+          (ARCHIVE_READ ? ', as read on ' + dmy(ARCHIVE_READ) : '') + '. Each opens at its DOI, or on CGSpace where it has none.</p></div>' +
+          '<div class="rows">' + more.map(archiveRowHTML).join('') + '</div>';
+      } else if (outsideArea) {
+        html += '<p class="src morenote">' + plural(outsideArea, 'CGSpace article') + ' also ' +
+          (outsideArea === 1 ? 'matches' : 'match') + '. CGSpace does not record an area of work, so ' +
+          (outsideArea === 1 ? 'it shows' : 'they show') + ' only with &ldquo;All areas of work&rdquo;.</p>';
+      }
+      out.innerHTML = html;
     }
 
     let timer = null;
@@ -191,16 +243,18 @@
     const rows = ['publication', 'method', 'innovation'].map(function (t) {
       return [H.TYPE_PLURAL[t], H.all.filter(function (i) { return i.type === t; }).length];
     }).filter(function (r) { return r[1] > 0; });
+    if (ARCHIVE.length) rows.push(['CGSpace journal articles reached by search', ARCHIVE.length]);
     host.innerHTML = '<div class="tablescroll"><table class="plain"><tbody>' +
       rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + r[1] + '</td></tr>'; }).join('') +
-      '<tr><td>CGIAR centres with work listed here</td><td>' + centreList().length + '</td></tr>' +
+      '<tr><td>CGIAR centres with work on this site</td><td>' + centreList().length + '</td></tr>' +
       '</tbody></table></div>' +
-      '<p class="src">Centres: ' + centreList().map(esc).join(', ') + '. Taken from the authors&rsquo; affiliations on each record.</p>';
+      '<p class="src">Centres: ' + centreList().map(esc).join(', ') + '. Taken from the authors&rsquo; affiliations on each record' +
+      (ARCHIVE.length ? ', the CGSpace articles included' : '') + '.</p>';
   })();
 
   function centreList() {
     const seen = {};
-    H.all.forEach(function (i) { (i.centres || []).forEach(function (c) { seen[c] = true; }); });
+    H.all.concat(ARCHIVE).forEach(function (i) { (i.centres || []).forEach(function (c) { seen[c] = true; }); });
     return Object.keys(seen).sort(function (a, b) { return a.localeCompare(b); });
   }
 
@@ -208,6 +262,9 @@
   (function corpusSize() {
     Array.prototype.forEach.call(document.querySelectorAll('.corpus-n'), function (el) {
       el.textContent = H.all.length;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.archive-n'), function (el) {
+      el.textContent = ARCHIVE.length;
     });
   })();
 })();

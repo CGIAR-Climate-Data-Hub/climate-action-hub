@@ -286,6 +286,9 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
 .herosearch button:hover { background: var(--blue-900); border-color: var(--blue-900); }
 .chero-words .src { margin-top: 12px; text-align: center; }
 .src { display: block; font-size: 12px; color: var(--text-3); line-height: 1.5; }
+.morehead { margin: 34px 0 14px; }
+.morehead p { font-size: 13.5px; color: var(--text-2); margin-top: 4px; }
+.morenote { margin-top: 18px; }
 .ctab-hub { color: var(--blue-800); font-weight: 700; }
 .ctab-hub span { font-size: 12px; opacity: .8; }
 .typecards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }

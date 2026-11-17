@@ -1,0 +1,550 @@
+{
+ "_embedded": {
+  "searchResult": {
+   "_embedded": {
+    "objects": [
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000001",
+        "handle": "10568/900001",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article A, hand-picked already",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-10",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "https://doi.org/10.9999/TEST.A",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal of Tests",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "International Livestock Research Institute",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000002",
+        "handle": "10568/900002",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article B, no date",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "10.9999/test.b",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal of Tests",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000003",
+        "handle": "10568/900003",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article C, two rice institutes",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-09-15",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "http://doi.org/10.9999/test.c",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal of Tests",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "Bangladesh Rice Research Institute",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "International Rice Research Institute",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          },
+          {
+           "value": "International rice research institute",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 2
+          }
+         ],
+         "cg.coverage.country": [
+          {
+           "value": "Bangladesh",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.coverage.region": [
+          {
+           "value": "Southern Asia",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000004",
+        "handle": "10568/900004",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article D, no DOI",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-08",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.publisher": [
+          {
+           "value": "Test Publisher",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "Bioversity International",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "International Center for Tropical Agriculture",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          },
+          {
+           "value": "World Agroforestry",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 2
+          }
+         ],
+         "dcterms.subject": [
+          {
+           "value": "soil",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "soil",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          },
+          {
+           "value": "  water   use  ",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 2
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000005",
+        "handle": "10568/900005",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article E, same date as F",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-07",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "10.9999/test.e",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal  of   Spaces",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "CGIAR",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "CGIAR System Organization",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000006",
+        "handle": "10568/900006",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented   article F,\nsame date as E",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-07",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "10.9999/test.f",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal of Tests",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "International Crops Research Institute for the Semi-Arid tropics",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "International Potato Center",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          },
+          {
+           "value": "International Center for Agricultural Research in the Dry Areas",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 2
+          }
+         ],
+         "cg.coverage.country": [
+          {
+           "value": "Kenya",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          },
+          {
+           "value": "Kenya",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
+          }
+         ],
+         "cg.coverage.region": [
+          {
+           "value": "Eastern Africa",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000007",
+        "handle": "10568/900007",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented article G, hand-picked by its CGSpace id",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-06",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.identifier.doi": [
+          {
+           "value": "10.9999/test.g",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.journal": [
+          {
+           "value": "Journal of Tests",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Journal Article",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "page": {
+    "number": 0,
+    "size": 100,
+    "totalElements": 7,
+    "totalPages": 1
+   }
+  }
+ }
+}

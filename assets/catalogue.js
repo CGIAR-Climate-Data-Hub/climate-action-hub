@@ -286,11 +286,13 @@ window.HUB = (function () {
   }
 
   /* Search terms are combined with AND, so every word typed has to appear in an
-     item. An OR search returned most of the catalogue for "climate finance". */
-  function search(q) {
+     item. An OR search returned most of the catalogue for "climate finance".
+     Searches the catalogue unless given another list (app.js passes the CGSpace
+     articles from archive.js this way). */
+  function search(q, list) {
     const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!terms.length) return [];
-    return all.map(function (item) {
+    return (list || all).map(function (item) {
       const area = areaById(item.aow);
       const hay = [item.title, item.blurb, item.provider, item.kind, item.geo,
                    LENS_LABEL[item.lens], (item.tags || []).join(' '), (item.centres || []).join(' '),
