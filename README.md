@@ -1,6 +1,6 @@
 # CGIAR Climate Action Hub
 
-The front door to the evidence behind the CGIAR Climate Action Science Program: publications, datasets, tools and methods, each linked to where it lives, with the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/) as the place for the data itself.
+The front door to the evidence behind the CGIAR Climate Action Science Program: publications, tools and methods, each linked to where it lives. Datasets are not listed here: they live on the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/), and every page points to it, so the two sites do not catalogue the same things.
 
 This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. There is no build step, no server, no sign-in and no tracking. Open `index.html` in a browser and it works.
 
@@ -8,13 +8,13 @@ This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. T
 
 | Page | Contents |
 |---|---|
-| `index.html` (Home) | Photograph, main heading and search, the program's published targets, three ways in by resource type, the five areas of work, the Climate Data Hub call-out, four foundational climate records, latest publications |
-| `resources.html` (Resources & Data) | The whole catalogue behind one search field and two filters, resource type and area of work |
+| `index.html` (Home) | Photograph, main heading and search, the program's published targets, three ways in (publications, tools and methods, and data on the Climate Data Hub), the five areas of work, the Climate Data Hub call-out, four featured tools, selected publications |
+| `resources.html` (Publications & Tools) | The whole catalogue behind one search field and two filters, resource type and area of work |
 | `about.html` (About & Contact) | The program, quoted from cgiar.org, a count of what is catalogued (worked out when the page loads), and how to get in touch |
 
 The layout follows [gender.cgiar.org](https://gender.cgiar.org/): the logo in a header, a tab bar beneath it, an image-led hero and plain sections down the page.
 
-Three link parameters work on Resources & Data, so other pages can send people straight to a filtered list: `?q=` for a search, `?type=` for a resource type (`dataset`, `publication`, `method`, `innovation`) and `?aow=` for an area of work (`aow1` to `aow5`). For example, `resources.html?aow=aow2&type=dataset`.
+Three link parameters work on Publications & Tools, so other pages can send people straight to a filtered list: `?q=` for a search, `?type=` for a resource type (`publication`, `method`, `innovation`) and `?aow=` for an area of work (`aow1` to `aow5`). For example, `resources.html?aow=aow2&type=method`.
 
 ## Files
 
@@ -24,7 +24,7 @@ assets/catalogue.js    every item on the site, the five areas of work and the ta
 assets/app.js          puts the catalogue on the pages
 assets/site.css        all the styles
 assets/cgiar-logo.png  the CGIAR Climate Action logo
-assets/img/            two photographs by John Choptiany (location data removed)
+assets/img/            four photographs by John Choptiany (location data removed): two on Home, one each on Publications & Tools and About
 assets/favicon.png, apple-touch-icon.png, social-card.jpg   tab icon, phone icon and the preview card for shared links
 404.html               the page shown for a mistyped address (its links are absolute, so it works at any depth)
 ```
@@ -34,7 +34,8 @@ assets/favicon.png, apple-touch-icon.png, social-card.jpg   tab icon, phone icon
 - To add or change a resource, edit `assets/catalogue.js`. The instructions are at the top of the file. Every count on the site is worked out from the catalogue when a page loads, so nothing else needs updating.
 - The header, tab bar and footer are repeated in each of the three HTML files, so a change to any of them has to be made in all three.
 - The program's aim, targets and areas of work are taken word for word from the [Climate Action page on cgiar.org](https://www.cgiar.org/cgiar-research-portfolio-2025-2030/climate-action), last checked on 17/11/2026, and credited on the pages with a source link. If that page changes, update the text to match.
-- Where a provider has not published a field (a dataset's resolution, say), leave it empty. Please don't fill it with an estimate.
+- Where a provider has not published a field (a tool's coverage, say), leave it empty. Please don't fill it with an estimate.
+- Datasets go to the Climate Data Hub, not here. A tool or platform built on data (an atlas, a monitor, an advisory service) belongs here as `type: 'method'`.
 
 ## Publishing on GitHub Pages
 

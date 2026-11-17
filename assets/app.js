@@ -73,20 +73,25 @@
     }).join('');
   })();
 
-  /* ---------- Home: three doors by resource type ---------- */
+  /* ---------- Home: three doors ----------
+   * Two open Publications & Tools filtered by type. The third goes to the Climate
+   * Data Hub, where the datasets are kept: this site does not list them. */
   (function typecards() {
     const host = $('#typecards');
     if (!host) return;
     const doors = [
-      { type: 'publication', name: 'Publications', desc: 'Journal articles, reports and briefs, each linked to its publisher.' },
-      { type: 'dataset',     name: 'Datasets',     desc: 'Climate records with resolution, coverage, cadence and licence stated where the provider publishes them.' },
-      { type: 'method',      name: 'Tools and methods', desc: 'Tutorials, manuals and notebooks: how to do the work, not only what exists.' }
+      { href: 'resources.html?type=publication', name: 'Publications', go: 'Browse &rarr;',
+        desc: 'Journal articles, reports and briefs, each linked to its publisher.' },
+      { href: 'resources.html?type=method', name: 'Tools and methods', go: 'Browse &rarr;',
+        desc: 'Decision tools, platforms and methods, from adaptation atlases to emissions MRV.' },
+      { href: 'https://cgiar-climate-data-hub.github.io/', name: 'Data', go: 'Open the Climate Data Hub &#8599;', external: true,
+        desc: 'Climate datasets with their metadata, notebooks and tutorials, on the Climate Data Hub.' }
     ];
     host.innerHTML = doors.map(function (d) {
-      return '<a class="typecard" href="resources.html?type=' + esc(d.type) + '">' +
+      return '<a class="typecard" href="' + esc(d.href) + '"' + (d.external ? ' target="_blank" rel="noopener"' : '') + '>' +
         '<div class="typecard-name">' + esc(d.name) + '</div>' +
         '<div class="typecard-desc">' + esc(d.desc) + '</div>' +
-        '<span class="typecard-go">Browse &rarr;</span></a>';
+        '<span class="typecard-go">' + d.go + '</span></a>';
     }).join('');
   })();
 
@@ -105,25 +110,23 @@
     }).join('');
   })();
 
-  /* ---------- Home: four foundational climate records ---------- */
-  (function foundational() {
-    const host = $('#foundational');
+  /* ---------- Home: four featured tools ---------- */
+  (function featured() {
+    const host = $('#featured');
     if (!host) return;
-    const pick = H.datasets.filter(function (d) {
-      return ['CHIRPS', 'ERA5', 'AgERA5'].indexOf(d.title) > -1 || d.title.indexOf('GLW4') > -1;
-    });
-    host.innerHTML = pick.map(cardHTML).join('');
+    host.innerHTML = ['d1', 'd2', 'd6', 'd8'].map(function (id) { return H.byId[id]; })
+      .filter(Boolean).map(cardHTML).join('');
   })();
 
   /* ---------- Home: selected publications ----------
-   * Drafts stay off the Home page; Resources & Data still lists them. */
+   * Drafts stay off the Home page; Publications & Tools still lists them. */
   (function latest() {
     const host = $('#latestPubs');
     if (!host) return;
     host.innerHTML = H.publications.filter(function (p) { return p.year !== 'Draft'; }).map(rowHTML).join('');
   })();
 
-  /* ---------- Resources: search plus two filters, with deep links ----------
+  /* ---------- Publications & Tools: search plus two filters, with deep links ----------
    * ?q= searches, ?type= sets the resource type and ?aow= the area of work, so
    * the doors and area rows on Home land here already filtered. */
   (function resources() {
@@ -175,14 +178,11 @@
   (function measures() {
     const host = $('#measures');
     if (!host) return;
-    const ds = H.datasets;
-    const full = ds.filter(function (d) { const c = H.completeness(d); return c && c.have === c.of; }).length;
-    const rows = ['dataset', 'publication', 'method', 'innovation'].map(function (t) {
+    const rows = ['publication', 'method', 'innovation'].map(function (t) {
       return [H.TYPE_PLURAL[t], H.all.filter(function (i) { return i.type === t; }).length];
     }).filter(function (r) { return r[1] > 0; });
     host.innerHTML = '<div class="tablescroll"><table class="plain"><tbody>' +
       rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + r[1] + '</td></tr>'; }).join('') +
-      '<tr><td>Datasets with all six metadata fields recorded</td><td>' + full + ' of ' + ds.length + '</td></tr>' +
       '</tbody></table></div>';
   })();
 
