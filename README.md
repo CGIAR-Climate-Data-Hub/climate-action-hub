@@ -10,7 +10,7 @@ This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. T
 |---|---|
 | `index.html` (Home) | Photograph, mission line and search, the program's published targets, three ways in by resource type, the five areas of work, the Climate Data Hub call-out, four foundational climate records, latest publications |
 | `resources.html` (Resources & Data) | The whole catalogue behind one search field and two filters, resource type and area of work |
-| `about.html` (About & Contact) | The program, quoted from cgiar.org with the date it was read, a count of what is catalogued (worked out when the page loads), and how to get in touch |
+| `about.html` (About & Contact) | The program, quoted from cgiar.org, a count of what is catalogued (worked out when the page loads), and how to get in touch |
 
 The layout follows [gender.cgiar.org](https://gender.cgiar.org/): the logo in a header, a tab bar beneath it, an image-led hero and plain sections down the page.
 
@@ -31,7 +31,7 @@ assets/img/            two Creative Commons photographs, credited on screen
 
 - To add or change a resource, edit `assets/catalogue.js`. The instructions are at the top of the file. Every count on the site is worked out from the catalogue when a page loads, so nothing else needs updating.
 - The header, tab bar and footer are repeated in each of the three HTML files, so a change to any of them has to be made in all three.
-- Text about the program is quoted from the Climate Action page on cgiar.org, with the date it was read printed beneath it. If that page changes, requote it and update the date.
+- The program's aim, targets and areas of work are taken word for word from the [Climate Action page on cgiar.org](https://www.cgiar.org/cgiar-research-portfolio-2025-2030/climate-action), last checked on 17/11/2026, and credited on the pages with a source link. If that page changes, update the text to match.
 - Where a provider has not published a field (a dataset's resolution, say), leave it empty. Please don't fill it with an estimate.
 
 ## Publishing on GitHub Pages

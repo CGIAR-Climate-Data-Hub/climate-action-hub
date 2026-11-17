@@ -33,8 +33,8 @@ window.HUB = (function () {
 
   /* The five areas of work, exactly as published on cgiar.org, read 10/08/2026. */
   const AREAS = [
-    { id: 'aow1', short: 'Prioritisation & coordination',
-      name: 'Prioritisation and Coordination of Climate Action',
+    { id: 'aow1', short: 'Prioritization & coordination',
+      name: 'Prioritization and Coordination of Climate Action',
       desc: "CGIAR's climate integration and engagement platform, connecting climate research across the organisation to support adaptation and mitigation planning and investment decisions." },
     { id: 'aow2', short: 'Digital advisories & risk',
       name: 'Digital Advisories and Climate Risk Management',
@@ -55,7 +55,7 @@ window.HUB = (function () {
     { figure: '16 million', label: 'smallholder farmers to benefit' },
     { figure: 'USD 15 billion', label: 'in climate finance to be unlocked' },
     { figure: '1 gigaton', label: 'CO2-equivalent reduction by 2030' },
-    { figure: '20', label: 'priority countries, across Tier 1 and Tier 2' }
+    { figure: '20', label: 'Tier 1 countries where benefits are expected' }
   ];
 
   const V_HUB   = 'Read from the CGIAR Climate Data Hub, 10/08/2026';
@@ -142,7 +142,7 @@ window.HUB = (function () {
       resolution: '5 arcminute', temporal: '2020', cadence: 'Static release',
       licence: 'Openly licensed, per Hub policy', formats: 'Analysis-ready, cloud-optimised',
       url: 'https://cgiar-climate-data-hub.github.io/catalog/spam2020/', verified: V_HUB,
-      blurb: 'Global spatially-disaggregated crop production statistics for 2020, one of two datasets currently in the Data Hub catalogue.',
+      blurb: 'Global spatially-disaggregated crop production statistics for 2020.',
       tags: ['crops', 'production', 'geospatial', 'harmonised'] },
 
     { id: 'd11', type: 'dataset', kind: 'Geospatial', title: 'Gridded Livestock Density 2020 (GLW4)',
@@ -150,7 +150,7 @@ window.HUB = (function () {
       resolution: '5 arcminute', temporal: '2020', cadence: 'Static release',
       licence: 'Openly licensed, per Hub policy', formats: 'Zarr store, streamable',
       url: 'https://cgiar-climate-data-hub.github.io/catalog/glw4-2020/', verified: V_HUB,
-      blurb: 'Modelled densities of six livestock species globally. The other of the two datasets currently in the Data Hub catalogue.',
+      blurb: 'Modelled densities of six livestock species globally.',
       tags: ['livestock', 'density', 'geospatial', 'emissions'] },
 
     /* ---- Foundational climate data the program works from. Metadata read
@@ -234,7 +234,7 @@ window.HUB = (function () {
       provider: 'CGIAR Climate Data Hub', aow: 'aow1', lens: 'cross', geo: 'Global', year: 'Live',
       resolution: null, temporal: null, cadence: null, licence: 'Open', formats: 'Agent skills, machine-callable',
       url: 'https://cgiar-climate-data-hub.github.io/ai/', verified: V_V02,
-      blurb: 'Machine-callable access and agent skills usable from Claude, ChatGPT or Gemini today. This is the only working AI route into the Hub.',
+      blurb: 'Machine-callable access and agent skills usable from Claude, ChatGPT or Gemini.',
       tags: ['AI', 'agents', 'API', 'machine-readable'] },
 
     { id: 'm5', type: 'method', kind: 'Method review', title: 'GCF climate rationale: data, skills and notebook review',
