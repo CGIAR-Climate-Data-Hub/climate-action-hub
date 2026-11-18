@@ -19,8 +19,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import cgspace as C  # noqa: E402
 
-PAGE = 100
-MAX_PAGES = 5
+PAGE = 50        # smaller pages answer faster; a page of 100 is about 1.5 MB
+MAX_PAGES = 8
+TIMEOUT = 120    # seconds per request; CGSpace can be slow at busy times
 AGENT = 'CGIAR-Climate-Action-Hub-cgspace-refresh (+https://github.com/CGIAR-Climate-Data-Hub/climate-action-hub)'
 
 
@@ -29,11 +30,13 @@ def get_json(url):
     for attempt in (1, 2, 3):
         try:
             req = urllib.request.Request(url, headers={'User-Agent': AGENT, 'Accept': 'application/json'})
-            with urllib.request.urlopen(req, timeout=60) as res:
-                return json.loads(res.read().decode('utf-8'))
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as res:
+                data = json.loads(res.read().decode('utf-8'))
+            time.sleep(1)  # one request at a time, with a pause, to go easy on CGSpace
+            return data
         except Exception as e:  # network, HTTP or JSON: retry, then give up
             last = e
-            time.sleep(attempt * 5)
+            time.sleep(attempt * 10)
     raise RuntimeError('Could not read ' + url + ': ' + str(last))
 
 
