@@ -124,7 +124,7 @@
         "metadata": {
          "dc.title": [
           {
-           "value": "Invented article C, two rice institutes",
+           "value": "Invented article C, two rice institutes, also tagged as a brief",
            "language": null,
            "authority": null,
            "confidence": -1,
@@ -206,6 +206,13 @@
            "authority": null,
            "confidence": -1,
            "place": 0
+          },
+          {
+           "value": "Brief",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 1
           }
          ]
         }
@@ -536,13 +543,125 @@
         }
        }
       }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000008",
+        "handle": "10568/900008",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented report H",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-10-01",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.publisher": [
+          {
+           "value": "Invented Publisher",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "International Potato Center",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Report",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "_embedded": {
+       "indexableObject": {
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "handle": "10568/900009",
+        "type": "item",
+        "metadata": {
+         "dc.title": [
+          {
+           "value": "Invented working paper J",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.issued": [
+          {
+           "value": "2026-09",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.publisher": [
+          {
+           "value": "Invented Publisher",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "cg.contributor.affiliation": [
+          {
+           "value": "WorldFish",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ],
+         "dcterms.type": [
+          {
+           "value": "Working Paper",
+           "language": null,
+           "authority": null,
+           "confidence": -1,
+           "place": 0
+          }
+         ]
+        }
+       }
+      }
      }
     ]
    },
    "page": {
     "number": 0,
     "size": 100,
-    "totalElements": 7,
+    "totalElements": 9,
     "totalPages": 1
    }
   }

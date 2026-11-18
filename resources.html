@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Publications and tools | CGIAR Climate Action Hub</title>
-<meta name="description" content="Search and filter the catalogue of publications, tools and methods behind the CGIAR Climate Action Science Program.">
+<meta name="description" content="Search hand-picked publications, tools and methods for the CGIAR Climate Action Science Program, and recent Climate Action research on CGSpace.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CGIAR Climate Action Hub">
 <meta property="og:title" content="Publications and tools | CGIAR Climate Action Hub">
-<meta property="og:description" content="Search and filter the catalogue of publications, tools and methods behind the CGIAR Climate Action Science Program.">
+<meta property="og:description" content="Search hand-picked publications, tools and methods for the CGIAR Climate Action Science Program, and recent Climate Action research on CGSpace.">
 <meta property="og:url" content="https://cgiar-climate-data-hub.github.io/climate-action-hub/resources.html">
 <meta property="og:image" content="https://cgiar-climate-data-hub.github.io/climate-action-hub/assets/social-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -59,10 +59,11 @@
   <div class="wrap">
     <div class="section-label">Publications &amp; Tools</div>
     <h1>Publications, tools and methods</h1>
-    <p>Everything catalogued, behind one search field and two filters. Search needs every word to appear, so a
-    phrase narrows rather than widens. It also reaches the newest <span class="archive-n">100</span> open-access
-    journal articles tagged Climate Action on CGSpace, listed after the hand-picked items. The full record of each
-    item lives with its publisher; this page links to it rather than copying it. Datasets are on the
+    <p>Below are <span class="corpus-n">37</span> hand-picked publications, tools and methods, each linked to
+    where it is published. A search also covers the <span class="archive-n">300</span> most recent open-access
+    journal articles, working papers, reports and briefs tagged Climate Action on CGSpace, and lists any matches
+    after the hand-picked items. Results must contain every word you type, so if a phrase finds nothing, try a
+    single word such as rice, methane or Kenya. Climate datasets are kept separately, on the
     <a href="https://cgiar-climate-data-hub.github.io/" target="_blank" rel="noopener">Climate Data Hub</a>.</p>
   </div>
 </div>
@@ -70,7 +71,7 @@
 <div class="filters">
   <div class="wrap filters-in">
     <label class="sr-only" for="fq">Search</label>
-    <input type="search" id="fq" placeholder="Search the catalogue">
+    <input type="search" id="fq" placeholder="Search the catalogue and CGSpace">
     <label class="sr-only" for="fType">Resource type</label>
     <select id="fType">
       <option value="all">All resource types</option>
@@ -81,7 +82,7 @@
     <label class="sr-only" for="fArea">Area of work</label>
     <select id="fArea"><option value="all">All areas of work</option></select>
     <button class="ghostbtn" id="fReset" type="button">Reset</button>
-    <span class="resultcount" id="rCount"></span>
+    <span class="resultcount" id="rCount" aria-live="polite"></span>
   </div>
 </div>
 
@@ -103,8 +104,8 @@
     <div class="footer-top">
       <div>
         <img src="assets/cgiar-logo.png" alt="CGIAR Climate Action" height="42">
-        <p>The evidence behind the CGIAR Climate Action Science Program: publications, tools and methods,
-        curated as one front door and linked to where each lives.</p>
+        <p>Publications, tools and methods for the CGIAR Climate Action Science Program, hand-picked and
+        linked to where each is published.</p>
       </div>
       <div class="footer-col">
         <h3>Explore</h3>

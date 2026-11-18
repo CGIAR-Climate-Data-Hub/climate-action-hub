@@ -62,6 +62,7 @@ window.HUB = (function () {
   ];
 
   const V_V02   = 'Carried over from the v0.2 prototype, link checked when that was built';
+  const V_1811  = "Read from the provider's own page on 18/11/2026";
 
   /* ---------- Tools and platforms ----------
      Filed as type 'method' so they sit with methods under "Tools and methods".
@@ -240,6 +241,89 @@ window.HUB = (function () {
       url: 'https://www.agmrv.org/', verified: V_V02,
       blurb: 'Methodology and tooling for monitoring, reporting and verifying agricultural greenhouse gas emissions.',
       tags: ['MRV', 'emissions', 'IPCC', 'inventories'] },
+
+    /* Added 18/11/2026 at John's request to spread the tools across centres. Each was
+       read on the page it links to that day; centres are the CGIAR centres that page
+       names as developers or partners. */
+    { id: 't1', type: 'method', kind: 'Foresight model', title: 'IMPACT model',
+      provider: 'IFPRI', centres: ['IFPRI'], aow: 'aow1', lens: 'cross', geo: 'Global', year: 'Since 2009',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Model and scenario results',
+      url: 'https://www.ifpri.org/project/ifpri-impact-model/', verified: V_1811,
+      blurb: 'Linked economic, water and crop models that IFPRI uses to explore long-term food and agriculture scenarios, climate change among them.',
+      tags: ['foresight', 'scenarios', 'modelling', 'food security', 'climate change', 'trade'] },
+
+    { id: 't9', type: 'method', kind: 'Method', title: 'Focused Identification of Germplasm Strategy (FIGS)',
+      provider: 'ICARDA', centres: ['ICARDA'], aow: 'aow1', lens: 'adaptation', geo: 'Global', year: '2013',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Method',
+      url: 'https://www.icarda.org/node/15518', verified: V_1811,
+      blurb: "ICARDA's technique for searching genebanks, so that breeders can find the material they need faster and more precisely.",
+      tags: ['genebanks', 'germplasm', 'breeding', 'traits', 'adaptation'] },
+
+    { id: 't4', type: 'method', kind: 'Atlas', title: 'Pest Risk Atlas for Africa',
+      provider: 'CIP', centres: ['CIP'], aow: 'aow2', lens: 'adaptation', geo: 'Africa', year: '2021',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Maps',
+      url: 'https://cipotato.org/blog/updated-pest-risk-atlas-will-build-climate-resilience-for-all', verified: V_1811,
+      blurb: "Pest risk maps built with CIP's Insect Life Cycle Modeling software (ILCYM), for governments and agricultural authorities protecting crops as the climate changes.",
+      tags: ['pests', 'pest risk', 'maps', 'crop protection', 'ILCYM'] },
+
+    { id: 't10', type: 'method', kind: 'Advisory app', title: 'AKILIMO',
+      provider: 'IITA, with partners', centres: ['Alliance of Bioversity and CIAT', 'CIFOR-ICRAF', 'IITA'], aow: 'aow2', lens: 'adaptation',
+      geo: 'Nigeria, Tanzania', year: '2019',
+      resolution: 'Site-specific', temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Smartphone app, maps and tables',
+      url: 'https://www.rtb.cgiar.org/akilimo/', verified: V_1811,
+      blurb: 'Site-specific advice for cassava growers on fertiliser, planting, weed control and intercropping, from the IITA-led African Cassava Agronomy Initiative (ACAI). Available in Nigeria and Tanzania, with Rwanda in development.',
+      tags: ['cassava', 'agronomy', 'advisories', 'fertiliser', 'app'] },
+
+    { id: 't11', type: 'method', kind: 'Biocontrol product', title: 'Aflasafe',
+      provider: 'IITA', centres: ['IITA'], aow: 'aow2', lens: 'adaptation', geo: 'Sub-Saharan Africa', year: null,
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Field product',
+      url: 'https://www.iita.org/research/our-research-themes/making-healthy-crops/aflatoxin-management/', verified: V_1811,
+      blurb: 'Biocontrol that uses native strains of Aspergillus flavus that do not make aflatoxin to crowd out those that do in maize and groundnut. IITA adapted it with USDA, and its strains suit hot, dry conditions.',
+      tags: ['aflatoxin', 'biocontrol', 'maize', 'groundnut', 'food safety', 'heat', 'drought'] },
+
+    { id: 't3', type: 'method', kind: 'Software', title: 'ClimMob',
+      provider: 'Alliance of Bioversity and CIAT', centres: ['Alliance of Bioversity and CIAT', 'IITA'], aow: 'aow3', lens: 'adaptation',
+      geo: 'Global', year: 'Live',
+      resolution: null, temporal: null, cadence: null, licence: 'Open source', formats: 'Software',
+      url: 'https://alliancebioversityciat.org/tools-innovations/climmob', verified: V_1811,
+      blurb: 'Open-source software for trials in which farmers compare three options, such as crop varieties, on their own land.',
+      tags: ['tricot', 'citizen science', 'participatory trials', 'varieties', 'farmers'] },
+
+    { id: 't5', type: 'method', kind: 'Practice', title: 'Alternate wetting and drying (AWD)',
+      provider: 'IRRI', centres: ['IRRI'], aow: 'aow4', lens: 'mitigation', geo: 'Global', year: null,
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Field practice',
+      url: 'https://ghgmitigation.irri.org/mitigation-technologies/alternate-wetting-and-drying', verified: V_1811,
+      blurb: 'A way of irrigating rice in which fields are drained to about 15 cm below the surface and then re-flooded. IRRI reports that it cuts water use by about 30 percent and methane by 30 to 70 percent without lowering yields.',
+      tags: ['rice', 'methane', 'irrigation', 'water saving', 'mitigation'] },
+
+    { id: 't6', type: 'method', kind: 'Calculator', title: 'iCLEANED',
+      provider: 'Alliance of Bioversity and CIAT', centres: ['Alliance of Bioversity and CIAT'], aow: 'aow4', lens: 'mitigation',
+      geo: 'Global', year: '2024',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Web tool (sign-in needed)',
+      url: 'https://alliancebioversityciat.org/tools-innovations/cleaned', verified: V_1811,
+      blurb: 'Web tool that estimates the land, water, soil and greenhouse gas footprint of a livestock system, along with its productivity and economic value.',
+      tags: ['livestock', 'emissions', 'footprint', 'environmental impact', 'calculator'] },
+
+    { id: 't7', type: 'method', kind: 'Field method', title: 'Land Degradation Surveillance Framework (LDSF)',
+      provider: 'CIFOR-ICRAF', centres: ['CIFOR-ICRAF'], aow: 'aow4', lens: 'cross', geo: 'Global tropics', year: '2023',
+      resolution: 'Field plots', temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Field manual',
+      url: 'https://www.cifor-icraf.org/knowledge/publication/25533/', verified: V_1811,
+      blurb: 'A field method from World Agroforestry for measuring soil, land and vegetation health over time, with soil properties such as organic carbon predicted by spectroscopy and checked against laboratory samples.',
+      tags: ['soil health', 'soil organic carbon', 'land degradation', 'restoration', 'monitoring'] },
+
+    { id: 't8', type: 'method', kind: 'Decision support', title: 'Nutrient Expert',
+      provider: 'CIMMYT', centres: ['CIMMYT'], aow: 'aow4', lens: 'mitigation', geo: '', year: '2021',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Decision support tool',
+      url: 'https://cgiar.org/news-events/news/digital-nutrient-management-tool-reduces-emissions-improves-crop-yields-and-boosts-farmers-profits', verified: V_1811,
+      blurb: 'Fertiliser advice tool for rice and wheat. A CIMMYT-led study reports that it cuts fertiliser use and greenhouse gas emissions while raising yields and profits.',
+      tags: ['fertiliser', 'nutrient management', 'rice', 'wheat', 'emissions'] },
+
+    { id: 't2', type: 'method', kind: 'Insurance product', title: 'Index-based livestock insurance (IBLI)',
+      provider: 'ILRI', centres: ['ILRI'], aow: 'aow5', lens: 'adaptation', geo: 'Kenya', year: 'Since 2010',
+      resolution: null, temporal: null, cadence: null, licence: 'Set by the source platform', formats: 'Insurance product',
+      url: 'https://www.ilri.org/research/projects/developing-and-piloting-index-based-livestock-insurance-reduce-poverty-and', verified: V_1811,
+      blurb: 'Insurance that protects pastoralists in drought-prone drylands against livestock losses. It was first piloted in Marsabit, Kenya in 2010, with the first payouts in October 2011.',
+      tags: ['insurance', 'drought', 'pastoralists', 'livestock', 'risk transfer', 'drylands'] },
 
   ];
 

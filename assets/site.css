@@ -321,7 +321,8 @@ a.typecard:hover { background: var(--blue-50); border-color: var(--blue-800); }
   font: inherit; font-size: 14px; padding: 9px 12px; color: var(--text);
   border: 1px solid var(--border); border-radius: 8px; background: #fff; min-width: 0;
 }
-.filters-in input[type="search"] { flex: 1; min-width: 180px; }
+.filters-in input[type="search"] { flex: 1 1 320px; min-width: 200px; }
+.filters-in .resultcount { flex: 1 1 100%; }
 .filters-in input:hover, .filters-in select:hover { border-color: var(--blue-800); }
 .filters-in .ghostbtn {
   font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; padding: 9px 16px;

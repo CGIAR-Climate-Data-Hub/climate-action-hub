@@ -23,14 +23,15 @@
     return m ? m[3] + '/' + m[2] + '/' + m[1] : '';
   };
 
-  /* The newest open-access Climate Action journal articles on CGSpace, from
-   * archive.js. They are searched, never listed on their own, and come after the
-   * hand-picked items. CGSpace records no area of work, so they have none here. */
+  /* The newest open-access research outputs tagged Climate Action on CGSpace
+   * (journal articles, working papers, reports and briefs), from archive.js. They
+   * are searched, never listed on their own, and come after the hand-picked items.
+   * CGSpace records no area of work, so they have none here. */
   const ARCHIVE_READ = (window.HUB_ARCHIVE && window.HUB_ARCHIVE.read) || '';
   const ARCHIVE = ((window.HUB_ARCHIVE && window.HUB_ARCHIVE.items) || []).map(function (r) {
-    return { id: r.id, type: 'publication', kind: 'Journal article', title: r.title, provider: r.journal,
-      year: String(r.issued || '').slice(0, 4), issued: r.issued, url: r.url,
-      centres: r.centres, geo: r.geo, tags: r.tags };
+    return { id: r.id, type: 'publication', kind: r.kind || 'Journal article', title: r.title,
+      provider: r.source || r.journal || '', year: String(r.issued || '').slice(0, 4), issued: r.issued,
+      url: r.url, centres: r.centres, geo: r.geo, tags: r.tags };
   });
 
   function lensChip(lens) {
@@ -84,7 +85,7 @@
     '</' + tag + '>';
   }
 
-  /* A row for a CGSpace article in search results. */
+  /* A row for a CGSpace item in search results. */
   function archiveRowHTML(item) {
     const meta = [item.kind, item.provider, item.year].filter(Boolean).map(esc).join(' &middot; ');
     return '<a class="row" href="' + esc(item.url) + '" target="_blank" rel="noopener">' +
@@ -185,6 +186,9 @@
     if (qs.get('type') && hasOption(typeSel, qs.get('type'))) typeSel.value = qs.get('type');
     if (qs.get('aow') && hasOption(areaSel, qs.get('aow'))) areaSel.value = qs.get('aow');
     if (qs.get('q')) qIn.value = qs.get('q');
+    if (ARCHIVE.length) {
+      qIn.placeholder = 'Search all ' + (H.all.length + ARCHIVE.length) + ', including ' + ARCHIVE.length + ' from CGSpace';
+    }
 
     function run() {
       const q = qIn.value.trim();
@@ -200,8 +204,13 @@
         more = [];
       }
       const area = H.areaById(areaSel.value);
-      count.textContent = plural(items.length, 'resource') + (area ? ' under ' + area.name : '') +
-        (more.length ? ', plus ' + plural(more.length, 'CGSpace article') : '');
+      /* Say plainly that the hand-picked list is not everything search can reach. */
+      const reachable = ARCHIVE.length && areaSel.value === 'all' &&
+        (typeSel.value === 'all' || typeSel.value === 'publication');
+      count.textContent = items.length + ' hand-picked ' + (items.length === 1 ? 'resource' : 'resources') +
+        (area ? ' under ' + area.name : '') +
+        (!reachable ? '' : q ? ', plus ' + more.length + ' from CGSpace'
+          : '. Search to include ' + ARCHIVE.length + ' more from CGSpace.');
 
       let html = '';
       if (items.length) {
@@ -209,17 +218,17 @@
       } else if (more.length) {
         html = '<div class="empty"><strong>No hand-picked item matches.</strong> The CGSpace articles below do.</div>';
       } else {
-        html = '<div class="empty"><strong>Nothing matches.</strong> Every search word has to appear in an item, so try ' +
-          'one word rather than a phrase, or clear a filter.</div>';
+        html = '<div class="empty"><strong>Nothing matches.</strong> Results must contain every word you type, so ' +
+          'try a single word, or clear a filter.</div>';
       }
       if (more.length) {
         html += '<div class="morehead"><h2>From CGSpace</h2>' +
-          '<p>' + more.length + (more.length === 1 ? ' match' : ' matches') + ' among the newest ' + ARCHIVE.length +
-          ' open-access journal articles tagged Climate Action on CGSpace' +
-          (ARCHIVE_READ ? ', as read on ' + dmy(ARCHIVE_READ) : '') + '. Each opens at its DOI, or on CGSpace where it has none.</p></div>' +
+          '<p>' + more.length + (more.length === 1 ? ' match' : ' matches') + ' in the ' + ARCHIVE.length +
+          ' most recent open-access journal articles, working papers, reports and briefs tagged Climate Action on CGSpace' +
+          (ARCHIVE_READ ? ' (list read on ' + dmy(ARCHIVE_READ) + ')' : '') + '. Links go to the DOI, or to CGSpace when an item has none.</p></div>' +
           '<div class="rows">' + more.map(archiveRowHTML).join('') + '</div>';
       } else if (outsideArea) {
-        html += '<p class="src morenote">' + plural(outsideArea, 'CGSpace article') + ' also ' +
+        html += '<p class="src morenote">' + plural(outsideArea, 'CGSpace item') + ' also ' +
           (outsideArea === 1 ? 'matches' : 'match') + '. CGSpace does not record an area of work, so ' +
           (outsideArea === 1 ? 'it shows' : 'they show') + ' only with &ldquo;All areas of work&rdquo;.</p>';
       }
@@ -243,13 +252,13 @@
     const rows = ['publication', 'method', 'innovation'].map(function (t) {
       return [H.TYPE_PLURAL[t], H.all.filter(function (i) { return i.type === t; }).length];
     }).filter(function (r) { return r[1] > 0; });
-    if (ARCHIVE.length) rows.push(['CGSpace journal articles reached by search', ARCHIVE.length]);
+    if (ARCHIVE.length) rows.push(['CGSpace research outputs reached by search', ARCHIVE.length]);
     host.innerHTML = '<div class="tablescroll"><table class="plain"><tbody>' +
       rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + r[1] + '</td></tr>'; }).join('') +
       '<tr><td>CGIAR centres with work on this site</td><td>' + centreList().length + '</td></tr>' +
       '</tbody></table></div>' +
-      '<p class="src">Centres: ' + centreList().map(esc).join(', ') + '. Taken from the authors&rsquo; affiliations on each record' +
-      (ARCHIVE.length ? ', the CGSpace articles included' : '') + '.</p>';
+      '<p class="src">Centres: ' + centreList().map(esc).join(', ') + '. For publications, taken from the authors&rsquo; affiliations' +
+      (ARCHIVE.length ? ' (the CGSpace items included)' : '') + '; for tools and methods, from the centres their own pages name.</p>';
   })();
 
   function centreList() {

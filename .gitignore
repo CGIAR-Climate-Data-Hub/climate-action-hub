@@ -1,2 +1,3 @@
 .DS_Store
 tools/cgspace-refresh/out/
+__pycache__/

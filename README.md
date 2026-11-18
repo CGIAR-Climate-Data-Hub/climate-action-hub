@@ -1,6 +1,6 @@
 # CGIAR Climate Action Hub
 
-The front door to the evidence behind the CGIAR Climate Action Science Program: publications, tools and methods, each linked to where it lives. Datasets are not listed here: they live on the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/), and every page points to it, so the two sites do not catalogue the same things.
+Hand-picked publications, tools and methods for the CGIAR Climate Action Science Program, each linked to where it is published. Datasets are not listed here: they are on the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/), and every page points to it, so the two sites do not catalogue the same things.
 
 This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. There is no build step, no server, no sign-in and no tracking. Open `index.html` in a browser and it works.
 
@@ -9,7 +9,7 @@ This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. T
 | Page | Contents |
 |---|---|
 | `index.html` (Home) | Photograph, main heading and search, the program's published targets, three ways in (publications, tools and methods, and data on the Climate Data Hub), the five areas of work, the Climate Data Hub call-out, four featured tools, selected publications |
-| `resources.html` (Publications & Tools) | The whole catalogue behind one search field and two filters, resource type and area of work. A search also reaches the newest 100 open-access Climate Action journal articles on CGSpace, listed after the hand-picked results |
+| `resources.html` (Publications & Tools) | The whole catalogue behind one search field and two filters, resource type and area of work. A search also reaches the newest 300 open-access Climate Action research outputs on CGSpace (journal articles, working papers, reports and briefs), listed after the hand-picked results. The result count says so before anyone searches |
 | `about.html` (About & Contact) | The program, quoted from cgiar.org, a count of what is catalogued (worked out when the page loads), and how to get in touch |
 
 The layout follows [gender.cgiar.org](https://gender.cgiar.org/): the logo in a header, a tab bar beneath it, an image-led hero and plain sections down the page.
@@ -21,7 +21,7 @@ Three link parameters work on Publications & Tools, so other pages can send peop
 ```
 index.html, resources.html, about.html
 assets/catalogue.js    every hand-picked item, the five areas of work and the targets
-assets/archive.js      the CGSpace journal articles that search also reaches; written by the weekly refresh, not by hand
+assets/archive.js      the CGSpace research outputs that search also reaches; written by the refresh, not by hand
 assets/app.js          puts the catalogue on the pages
 assets/site.css        all the styles
 assets/cgiar-logo.png  the CGIAR Climate Action logo
@@ -35,7 +35,7 @@ tools/cgspace-refresh/ the weekly refresh of archive.js, with its own README
 ## Making changes
 
 - To add or change a resource, edit `assets/catalogue.js`. The instructions are at the top of the file. Every count on the site is worked out from the catalogue when a page loads, so nothing else needs updating.
-- Please leave `assets/archive.js` alone: each Monday a GitHub Action reads CGSpace again and, when the list has changed, opens a pull request with the new file. Merging it is what puts the change live. An article hand-picked into `catalogue.js` drops out of `archive.js` at the next refresh, so nothing is listed twice. See `tools/cgspace-refresh/README.md`.
+- Please leave `assets/archive.js` alone: each Monday a GitHub Action reads CGSpace again and, when the list has changed, opens a pull request with the new file. Merging it is what puts the change live. An item hand-picked into `catalogue.js` drops out of `archive.js` at the next refresh, so nothing is listed twice. The same refresh can be run on a computer with Python 3. See `tools/cgspace-refresh/README.md`.
 - The header, tab bar and footer are repeated in each of the three HTML files, so a change to any of them has to be made in all three.
 - The program's aim, targets and areas of work are taken word for word from the [Climate Action page on cgiar.org](https://www.cgiar.org/cgiar-research-portfolio-2025-2030/climate-action), last checked on 17/11/2026, and credited on the pages with a source link. If that page changes, update the text to match.
 - Where a provider has not published a field (a tool's coverage, say), leave it empty. Please don't fill it with an estimate.
