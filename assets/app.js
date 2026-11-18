@@ -39,9 +39,12 @@
     return '<span class="lens lens-' + lens + '">' + esc(H.LENS_LABEL[lens]) + '</span>';
   }
 
-  /* The CGIAR centres behind an item, from its catalogue record. */
+  /* The CGIAR centres behind an item, from its catalogue record. Left out when the
+     provider line already names every one of them. */
   function centresHTML(item) {
     if (!item.centres || !item.centres.length) return '';
+    const provider = String(item.provider || '');
+    if (item.centres.every(function (c) { return provider.indexOf(c) > -1; })) return '';
     return '<div class="item-centres">' + (item.centres.length === 1 ? 'Centre: ' : 'Centres: ') +
       item.centres.map(esc).join(', ') + '</div>';
   }
@@ -51,7 +54,7 @@
     const tag = item.url ? 'a' : 'div';
     const attrs = item.url ? ' href="' + esc(item.url) + '" target="_blank" rel="noopener"' : '';
     const specs = [['Resolution', item.resolution], ['Coverage', item.temporal],
-                   ['Updated', item.cadence], ['Access', item.formats]]
+                   ['Updated', item.cadence], ['Format', item.formats]]
       .filter(function (p) { return p[1]; });
     const specHTML = specs.length
       ? '<dl class="cardspecs">' + specs.map(function (p) {
@@ -117,8 +120,8 @@
         desc: 'Journal articles, reports and briefs, each linked to its publisher.' },
       { href: 'resources.html?type=method', name: 'Tools and methods', go: 'Browse &rarr;',
         desc: 'Decision tools, platforms and methods, from adaptation atlases to emissions MRV.' },
-      { href: 'https://cgiar-climate-data-hub.github.io/', name: 'Data', go: 'Open the Climate Data Hub &#8599;', external: true,
-        desc: 'Climate datasets with their metadata, notebooks and tutorials, on the Climate Data Hub.' }
+      { href: 'https://cgiar-climate-data-hub.github.io/catalog/', name: 'Data', go: 'Browse the Data Hub catalogue &#8599;', external: true,
+        desc: 'Climate and related data for adaptation, mitigation and risk assessment, with notebooks and tutorials, on the Climate Data Hub.' }
     ];
     host.innerHTML = doors.map(function (d) {
       return '<a class="typecard" href="' + esc(d.href) + '"' + (d.external ? ' target="_blank" rel="noopener"' : '') + '>' +
@@ -190,8 +193,9 @@
       qIn.placeholder = 'Search all ' + (H.all.length + ARCHIVE.length) + ', including ' + ARCHIVE.length + ' from CGSpace';
     }
 
-    function run() {
-      const q = qIn.value.trim();
+    /* What a query finds under the current filters: hand-picked items, CGSpace items,
+       and how many CGSpace items an area filter is hiding. */
+    function find(q) {
       let items = q ? H.search(q) : H.all;
       let more = q ? H.search(q, ARCHIVE) : [];
       if (typeSel.value !== 'all') {
@@ -203,6 +207,27 @@
         items = items.filter(function (i) { return i.aow === areaSel.value; });
         more = [];
       }
+      return { items: items, more: more, outsideArea: outsideArea };
+    }
+
+    /* When a phrase finds nothing, each of its words as a one-click search, with
+       what it would find. Short and common words are left out. */
+    const STOP = ['and', 'the', 'for', 'with', 'from', 'into', 'its', 'are', 'was', 'not', 'how', 'what'];
+    function suggestions(q) {
+      const seen = {};
+      return q.toLowerCase().split(/\s+/).filter(function (t) {
+        if (t.length < 3 || STOP.indexOf(t) > -1 || seen[t]) return false;
+        seen[t] = true; return true;
+      }).map(function (t) {
+        const f = find(t);
+        return { term: t, n: f.items.length + f.more.length };
+      }).filter(function (s) { return s.n > 0; });
+    }
+
+    function run() {
+      const q = qIn.value.trim();
+      const found = find(q);
+      const items = found.items, more = found.more, outsideArea = found.outsideArea;
       const area = H.areaById(areaSel.value);
       /* Say plainly that the hand-picked list is not everything search can reach. */
       const reachable = ARCHIVE.length && areaSel.value === 'all' &&
@@ -218,8 +243,13 @@
       } else if (more.length) {
         html = '<div class="empty"><strong>No hand-picked item matches.</strong> The CGSpace articles below do.</div>';
       } else {
+        const sug = q && q.indexOf(' ') > -1 ? suggestions(q) : [];
         html = '<div class="empty"><strong>Nothing matches.</strong> Results must contain every word you type, so ' +
-          'try a single word, or clear a filter.</div>';
+          (sug.length ? 'try one word at a time:' : 'try a single word, or clear a filter.') +
+          (sug.length ? '<div class="suggest-row">' + sug.map(function (s) {
+            return '<button type="button" class="suggest" data-q="' + esc(s.term) + '">' + esc(s.term) +
+              ' (' + s.n + ')</button>';
+          }).join('') + '</div>' : '') + '</div>';
       }
       if (more.length) {
         html += '<div class="morehead"><h2>From CGSpace</h2>' +
@@ -234,6 +264,14 @@
       }
       out.innerHTML = html;
     }
+
+    out.addEventListener('click', function (e) {
+      const b = e.target.closest ? e.target.closest('.suggest') : null;
+      if (!b) return;
+      qIn.value = b.getAttribute('data-q');
+      run();
+      qIn.focus();
+    });
 
     let timer = null;
     qIn.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 240); });
