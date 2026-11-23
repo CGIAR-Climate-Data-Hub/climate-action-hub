@@ -120,10 +120,8 @@
       { href: 'resources.html?type=publication', name: 'Publications', go: 'Browse &rarr;',
         desc: 'Journal articles, reports and briefs, each linked to its publisher.' },
       { href: 'resources.html?type=method', name: 'Tools and methods', go: 'Browse &rarr;',
-        desc: 'Decision tools, platforms and methods, from adaptation atlases to emissions MRV.' },
-      { href: 'https://cgiar-climate-data-hub.github.io/catalog/', name: 'Data', go: 'Browse the Data Hub catalogue &#8599;', external: true,
-        desc: 'Climate and related data for adaptation, mitigation and risk assessment, with notebooks and tutorials, on the Climate Data Hub.' }
-    ];
+        desc: 'Decision tools, platforms and methods, from adaptation atlases to emissions MRV.' }
+    ];  // the data door is the Data Hub panel just below on Home
     host.innerHTML = doors.map(function (d) {
       return '<a class="typecard" href="' + esc(d.href) + '"' + (d.external ? ' target="_blank" rel="noopener"' : '') + '>' +
         '<div class="typecard-name">' + esc(d.name) + '</div>' +
@@ -310,6 +308,32 @@
    * CGSpace records under the climate adaptation and mitigation impact area, by
    * science program or accelerator, from archive.js (the weekly refresh updates
    * them). One series in one hue; each bar opens those records on CGSpace. */
+  (function benefitMap() {
+    // Pop-up country name on the About map, for the mouse and for a tap on a touch screen.
+    const wrap = $('.mapwrap'); if (!wrap) return;
+    const tip = document.createElement('div');
+    tip.className = 'maptip'; tip.setAttribute('aria-hidden', 'true'); tip.hidden = true; wrap.appendChild(tip);
+    let cur = null;
+    const hide = function () { tip.hidden = true; if (cur) cur.classList.remove('on'); cur = null; };
+    const show = function (e, el) {
+      if (cur !== el) {
+        if (cur) cur.classList.remove('on');
+        cur = el; el.classList.add('on');
+        tip.innerHTML = '<strong>' + esc(el.getAttribute('data-n')) + '</strong>Tier ' + esc(el.getAttribute('data-t'));
+        tip.hidden = false;
+      }
+      const r = wrap.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+      const x = Math.min(Math.max(e.clientX - r.left - w / 2, 0), r.width - w);
+      let y = e.clientY - r.top - h - 14; if (y < 0) y = e.clientY - r.top + 20;
+      tip.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
+    };
+    const country = function (e) { return e.target && e.target.closest ? e.target.closest('[data-n]') : null; };
+    wrap.addEventListener('pointermove', function (e) { const el = country(e); if (el) show(e, el); else hide(); });
+    wrap.addEventListener('pointerdown', function (e) { const el = country(e); if (el) show(e, el); else hide(); });
+    wrap.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hide(); });
+    document.addEventListener('pointerdown', function (e) { if (!wrap.contains(e.target)) hide(); });
+  })();
+
   (function climatePrograms() {
     const host = $('#climatePrograms');
     if (!host) return;
@@ -337,8 +361,23 @@
     }).join('') + '</ul>' +
     (P.length > 1 ? '<p class="fig-take">' + esc(P[0].name) + ' names the most, but ' + (P.length - 1) +
       ' other programs and accelerators also produce climate research.</p>' : '') +
-    '<p class="src">Read from CGSpace on ' + dmy(A.programsRead || A.read) + '. An output can name more than one ' +
-      'program, so the bars add up to more than the number of outputs. Select a bar to see those outputs on CGSpace.</p>';
+    '<p class="src">Counts read from CGSpace on ' + dmy(A.programsRead || A.read) + '. An output can name more than one ' +
+      'program, so the bars add up to more than the number of outputs (select a bar to see them on CGSpace).</p>';
+  })();
+
+  /* ---------- Home: what the search reaches, counted at load ---------- */
+  (function heroReach() {
+    const host = $('#heroReach'); if (!host) return;
+    const n = function (t) { return H.all.filter(function (i) { return i.type === t; }).length; };
+    const b = function (x) { return '<strong>' + Number(x).toLocaleString('en-GB') + '</strong>'; };
+    const parts = [];
+    if (n('publication')) parts.push(b(n('publication')) + ' hand-picked publication' + (n('publication') === 1 ? '' : 's'));
+    if (n('method')) parts.push(b(n('method')) + ' tool' + (n('method') === 1 ? '' : 's') + ' and methods');
+    if (ARCHIVE.length) parts.push('the ' + b(ARCHIVE.length) + ' newest <span class="nowrap">open-access</span> climate outputs on CGSpace');
+    if (!parts.length) { host.parentNode.removeChild(host); return; }
+    const list = parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0];
+    const c = centreList().length;
+    host.innerHTML = 'Search reaches ' + list + (c ? ', with work from ' + b(c) + ' CGIAR centres.' : '.');
   })();
 
   /* ---------- Any stated catalogue size is recounted at load ---------- */

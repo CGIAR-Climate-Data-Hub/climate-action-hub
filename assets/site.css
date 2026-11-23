@@ -187,6 +187,9 @@ footer { background: var(--blue-900); color: var(--on-dark); margin-top: 40px; }
   background: var(--blue-100); padding: 6px 12px; border-radius: 20px; white-space: nowrap;
 }
 .photoband { position: relative; margin: 0; }
+.chero-reach { font-size: 14px; color: var(--text-2); max-width: 640px; margin: 14px auto 0; line-height: 1.55; }
+.chero-reach strong { color: var(--blue-900); font-weight: 700; }
+.nowrap { white-space: nowrap; }
 .photoband img { display: block; width: 100%; height: clamp(150px, 20vw, 240px); object-fit: cover; }
 @media (max-width: 640px) {
 
@@ -382,14 +385,27 @@ a.aowrow:focus-visible { outline: 2px solid var(--blue-800); outline-offset: 2px
   font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-3);
 }
 .mapfig { margin: 26px 0 8px; }
-.benefitmap { display: block; width: 100%; height: auto; margin-top: 8px; }
+.mapwrap { position: relative; margin-top: 8px; }
+@media (min-width: 900px) {
+  /* the map is wider than the text column: up to the full page width, centred on the column */
+  .mapwrap { width: min(1112px, calc(100vw - 64px)); left: 50%; transform: translateX(-50%); }
+}
+.benefitmap { display: block; width: 100%; height: auto; }
 .bm-other { fill: #DDE3EA; stroke: #fff; stroke-width: .6; }
-.bm-t1 { fill: #1955A6; stroke: #fff; stroke-width: .8; }
-.bm-t2 { fill: #4A8BDF; stroke: #fff; stroke-width: .8; }
-.bm-t1:hover, .bm-t2:hover { stroke: #0A1E3C; stroke-width: 1.4; }
+.bm-t1 { fill: #123F7E; stroke: #fff; stroke-width: .8; cursor: default; }
+.bm-t2 { fill: #7AAEEE; stroke: #fff; stroke-width: .8; cursor: default; }
+.bm-t1.on, .bm-t2.on { stroke: #0A1E3C; stroke-width: 1.6; }
+.bm-t1.on { fill: #2D6BC4; } .bm-t2.on { fill: #5596E6; }
+.maptip {
+  position: absolute; left: 0; top: 0; pointer-events: none; z-index: 2; white-space: nowrap;
+  background: #0A1E3C; color: #fff; font-size: 13px; line-height: 1.35; padding: 6px 10px; border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(10, 30, 60, .25);
+}
+.maptip strong { display: block; font-size: 14px; }
+.maptip[hidden] { display: none; }
 .maplegend { display: flex; gap: 18px; font-size: 13px; color: var(--text-2); margin: 8px 0 6px; }
 .maplegend .sw { display: inline-block; width: 14px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
-.sw-t1 { background: #1955A6; } .sw-t2 { background: #4A8BDF; }
+.sw-t1 { background: #123F7E; } .sw-t2 { background: #7AAEEE; }
 .mapfig figcaption p { font-size: 14px; margin: 4px 0; }
 .progbars { list-style: none; margin: 4px 0 8px; padding: 0; }
 @media (max-width: 560px) { .progbars-head { display: none; } }

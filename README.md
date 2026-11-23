@@ -26,6 +26,7 @@ assets/app.js          puts the catalogue on the pages
 assets/site.css        all the styles
 assets/cgiar-logo.png  the CGIAR Climate Action logo, kept until an approved logo for the wider site is supplied
 assets/img/            four photographs by John Choptiany (location data removed): two on Home, one each on Publications & Tools and About
+                       (each in three widths, 800, 1400 and 2400 px, so phones load the smaller copies)
 assets/favicon.png, apple-touch-icon.png, social-card.jpg   tab icon, phone icon and the preview card for shared links
 404.html               the page shown for a mistyped address (it works out where it is served from, so it works at any depth and on any domain)
 tools/cgspace-refresh/ the weekly refresh of archive.js, with its own README

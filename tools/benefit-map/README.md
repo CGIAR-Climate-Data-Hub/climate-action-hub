@@ -14,4 +14,6 @@ To change the map when the lists change:
 3. In about.html, replace the `<svg class="benefitmap"> ... </svg>` block with the new file, and update the two
    country lists and the read date under the map.
 
-The colours are set in assets/site.css (.bm-t1, .bm-t2, .bm-other), not in the SVG.
+The colours are set in assets/site.css (.bm-t1, .bm-t2, .bm-other), not in the SVG. The map is cropped to the band
+that holds the benefit countries (LON and LAT in build-map.mjs); widen it there if a new country falls outside. The
+pop-up names come from each country's data-n and data-t attributes, read by benefitMap in assets/app.js.
