@@ -1,0 +1,6 @@
+# CGSpace items the site's search should never list, one per line: a CGSpace handle
+# (10568/...) or a DOI, then a note of what it is, who asked and when. The refresh
+# reads this file on every run, so an item left out here stays out.
+
+10568/186614  Sustainable Farming Science Program updated proposal, November 2025. A program document, not climate research (John Choptiany, 23/11/2026).
+10568/183477  Plan of Results and Budget 2026 - Adapt: CGIAR Science Program on Climate Action. A planning document, not research (John Choptiany, 23/11/2026).

@@ -322,17 +322,23 @@
       return 'https://cgspace.cgiar.org/search?f.impactArea=' + encodeURIComponent('Climate adaptation and mitigation') +
         ',equals&f.programAccelerator=' + encodeURIComponent(name) + ',equals';
     };
-    host.innerHTML = '<ul class="progbars">' + P.map(function (p) {
+    host.innerHTML = '<h3 class="fig-title" style="margin-top:26px">Which CGIAR programs produce climate research</h3>' +
+      '<p class="fig-lead">Each bar counts the outputs on CGSpace (articles, reports, briefs and other records) that are ' +
+      'filed under climate adaptation and mitigation and name that science program or accelerator.</p>' +
+      '<div class="progbars-head" aria-hidden="true"><span>Science program or accelerator</span>' +
+      '<span>Climate outputs</span></div>' +
+      '<ul class="progbars">' + P.map(function (p) {
       const w = Math.max(1, Math.round(p.count / max * 100));
       return '<li><a href="' + esc(link(p.name)) + '" target="_blank" rel="noopener" title="' +
-        esc(p.name + ': ' + fmt(p.count) + ' records on CGSpace') + '">' +
+        esc(p.name + ': ' + fmt(p.count) + ' climate outputs on CGSpace') + '">' +
         '<span class="progbar-name">' + esc(p.name) + '</span>' +
         '<span class="progbar-track" aria-hidden="true"><span class="progbar-fill" style="width:' + w + '%"></span></span>' +
-        '<span class="progbar-n">' + fmt(p.count) + '</span></a></li>';
+        '<span class="progbar-n">' + fmt(p.count) + '<span class="sr-only"> climate outputs</span></span></a></li>';
     }).join('') + '</ul>' +
-    '<p class="src">CGSpace records under CGIAR&rsquo;s climate adaptation and mitigation impact area that name each science ' +
-      'program or accelerator, as read on ' + dmy(A.programsRead || A.read) + '. A record can name more than one. ' +
-      'Each bar opens those records on CGSpace.</p>';
+    (P.length > 1 ? '<p class="fig-take">' + esc(P[0].name) + ' names the most, but ' + (P.length - 1) +
+      ' other programs and accelerators also produce climate research.</p>' : '') +
+    '<p class="src">Read from CGSpace on ' + dmy(A.programsRead || A.read) + '. An output can name more than one ' +
+      'program, so the bars add up to more than the number of outputs. Select a bar to see those outputs on CGSpace.</p>';
   })();
 
   /* ---------- Any stated catalogue size is recounted at load ---------- */

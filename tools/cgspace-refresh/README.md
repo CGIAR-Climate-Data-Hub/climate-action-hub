@@ -44,8 +44,10 @@ email, watch the repository on GitHub (the Watch button, then "All Activity").
 
 **Merging the pull request is what publishes.** GitHub Pages picks up the merge within a
 minute or two, with nothing to run on a computer. To drop the whole update, close the pull
-request. To keep one item out for good, the simplest route is to hand-pick it into
-`catalogue.js` with a proper description, or to ask for an exclusion list to be added here.
+request. To keep one item out for good, add its CGSpace handle (10568/...) or DOI to
+`exclude.txt` in this folder, with a note of what it is and who asked; every run reads that
+file. The first entry, of 23/11/2026, is a Sustainable Farming program proposal that CGSpace
+files under the climate impact area.
 
 You can also run it at any time: the repository's Actions tab, "CGSpace refresh",
 "Run workflow".
@@ -92,6 +94,7 @@ says so by email. Re-enable it from the Actions tab.
 tools/cgspace-refresh/
   refresh.py       the run (Python 3.9 or later, standard library only)
   cgspace.py       choosing, tidying and writing the list, kept separate so it can be tested offline
+  exclude.txt      CGSpace items never to list, one handle or DOI per line, with a note
   test.py          offline checks, including whole runs against fake CGSpaces, and that
                    assets/archive.js is in the format the run writes
   fixtures/        invented CGSpace answers for the checks (see fixtures/README.md)

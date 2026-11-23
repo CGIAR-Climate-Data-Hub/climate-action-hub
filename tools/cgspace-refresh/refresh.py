@@ -114,6 +114,10 @@ def run(root, fetch=get_json, today=None):
     found, totals = read_cgspace(fetch)
     with open(catalogue, encoding='utf-8') as f:
         curated = C.curated_keys(f.read())
+    exclude_file = os.path.join(root, 'tools', 'cgspace-refresh', 'exclude.txt')
+    if os.path.exists(exclude_file):
+        with open(exclude_file, encoding='utf-8') as f:
+            curated |= C.excluded_keys(f.read())
     records = C.select(found, curated)
     total = sum(totals.values())
     if len(records) < C.MIN_SANE:
@@ -153,8 +157,8 @@ def run(root, fetch=get_json, today=None):
             total, ', '.join('%s %d' % (k, n) for k, n in totals.items()), len(records), mix), '',
         '**' + summary + '.**', '',
         'Merging this pull request puts the new list live. Closing it leaves the site as it is. To keep an '
-        'item out for good, hand-pick it into `assets/catalogue.js` (hand-picked items are never listed '
-        'twice) or ask for an exclusion list to be added to this refresh.', '',
+        'item out for good, add its handle or DOI to `tools/cgspace-refresh/exclude.txt` (or hand-pick it '
+        'into `assets/catalogue.js`, since hand-picked items are never listed twice).', '',
     ]
     if diff['added']:
         report += ['### Added', ''] + [line(r) for r in diff['added']] + ['']

@@ -1,0 +1,11 @@
+{
+  "name": "benefit-map",
+  "private": true,
+  "description": "Builds the Climate Action benefit-country map shown on about.html",
+  "type": "module",
+  "dependencies": {
+    "d3-geo": "^3.1.2",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  }
+}

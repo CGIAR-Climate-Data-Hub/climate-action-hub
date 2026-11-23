@@ -374,7 +374,25 @@ a.aowrow:focus-visible { outline: 2px solid var(--blue-800); outline-offset: 2px
   background: rgba(10, 30, 60, 0.72); color: #fff; font-size: 12px; line-height: 1.4; padding: 4px 10px;
 }
 .suggest-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.progbars { list-style: none; margin: 14px 0 8px; padding: 0; }
+.fig-title { font-size: 1.05rem; color: var(--blue-900); margin: 26px 0 6px; }
+.fig-lead { font-size: 14.5px; color: var(--text-2); margin: 0 0 10px; }
+.fig-take { font-size: 14.5px; color: var(--text); font-weight: 600; margin: 8px 0 4px; }
+.progbars-head {
+  display: flex; justify-content: space-between; gap: 12px; padding: 0 6px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-3);
+}
+.mapfig { margin: 26px 0 8px; }
+.benefitmap { display: block; width: 100%; height: auto; margin-top: 8px; }
+.bm-other { fill: #DDE3EA; stroke: #fff; stroke-width: .6; }
+.bm-t1 { fill: #1955A6; stroke: #fff; stroke-width: .8; }
+.bm-t2 { fill: #4A8BDF; stroke: #fff; stroke-width: .8; }
+.bm-t1:hover, .bm-t2:hover { stroke: #0A1E3C; stroke-width: 1.4; }
+.maplegend { display: flex; gap: 18px; font-size: 13px; color: var(--text-2); margin: 8px 0 6px; }
+.maplegend .sw { display: inline-block; width: 14px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.sw-t1 { background: #1955A6; } .sw-t2 { background: #4A8BDF; }
+.mapfig figcaption p { font-size: 14px; margin: 4px 0; }
+.progbars { list-style: none; margin: 4px 0 8px; padding: 0; }
+@media (max-width: 560px) { .progbars-head { display: none; } }
 .progbars li { margin: 0; }
 .progbars a {
   display: grid; grid-template-columns: minmax(150px, 17.5rem) 1fr 3.5rem; gap: 12px; align-items: center;

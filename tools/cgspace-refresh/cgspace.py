@@ -136,6 +136,21 @@ def curated_keys(catalogue_text):
     return keys
 
 
+def excluded_keys(text):
+    """Handles and DOIs listed in exclude.txt (one per line, # for comments)."""
+    keys = set()
+    for line in str(text or '').splitlines():
+        line = line.split('#', 1)[0].strip()
+        if not line:
+            continue
+        first_word = line.split()[0]
+        if re.match(r'^10568/[0-9]+$', first_word):
+            keys.add('hdl:' + first_word)
+        elif bare_doi(first_word).startswith('10.'):
+            keys.add('doi:' + bare_doi(first_word))
+    return keys
+
+
 def keys_of(item):
     k = []
     doi = bare_doi(first(item, 'cg.identifier.doi'))

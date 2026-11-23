@@ -73,6 +73,10 @@ cur = C.curated_keys(read(HERE, 'fixtures', 'catalogue-snippet.js'))
 check('DOI read from the catalogue', 'doi:10.9999/test.a' in cur)
 check('CGSpace item id read from the catalogue', 'uuid:00000000-0000-4000-8000-000000000007' in cur)
 
+# Items left out on request
+ex = C.excluded_keys('# comment\n\n10568/900004  a note\nhttps://doi.org/10.9999/TEST.E  another note\nnonsense line\n')
+check('exclude.txt read: handles and DOIs, notes and comments ignored', ex == {'hdl:10568/900004', 'doi:10.9999/test.e'}, ex)
+
 # A fake CGSpace that answers each type's query from the fixture
 FIX = json.loads(read(HERE, 'fixtures', 'search.json'))
 ITEMS = [o['_embedded']['indexableObject'] for o in FIX['_embedded']['searchResult']['_embedded']['objects']]
@@ -192,6 +196,14 @@ try:
     first_text = read(arch)
     check('first run writes the list', s1['changed'] and s1['kept'] == 156 and C.parse(first_text)['read'] == '2026-11-18', s1)
     check('first run writes the program counts', C.parse(first_text)['programs'][0] == {'name': 'Climate Action', 'count': 6})
+    os.makedirs(os.path.join(tmp, 'tools', 'cgspace-refresh'), exist_ok=True)
+    with open(os.path.join(tmp, 'tools', 'cgspace-refresh', 'exclude.txt'), 'w', encoding='utf-8') as f:
+        f.write('10568/900003  invented item asked to be left out\n')
+    s_ex = R.run(tmp, fetch=fake(bulk), today='2026-11-18')
+    check('a run leaves out what exclude.txt lists', 'cgs900003' not in [r['id'] for r in C.parse(read(arch))['items']], s_ex)
+    os.remove(os.path.join(tmp, 'tools', 'cgspace-refresh', 'exclude.txt'))
+    R.run(tmp, fetch=fake(bulk), today='2026-11-18')
+    first_text = read(arch)
     s2 = R.run(tmp, fetch=fake(bulk), today='2026-11-25')
     check('second run, nothing new: file left alone', not s2['changed'] and read(arch) == first_text, s2)
     newer = bulk + [{'handle': '10568/999999', 'uuid': 'n1', 'metadata': {'dc.title': [{'value': 'Invented new brief'}],
@@ -233,6 +245,9 @@ if site:
     check('assets/archive.js kinds known', {r['kind'] for r in items} <= {k for _, k in C.TYPES})
     check('assets/archive.js already tidy', all(C.tidy(r) == r for r in items))
     cat = C.curated_keys(read(ROOT, 'assets', 'catalogue.js'))
+    exc = C.excluded_keys(read(HERE, 'exclude.txt'))
+    check('assets/archive.js lists nothing from exclude.txt', not any(
+        ('hdl:10568/' + r['id'][3:]) in exc or ('doi:' + C.bare_doi(r['url'])) in exc for r in items))
     check('assets/archive.js repeats no hand-picked item', not any(
         ('doi:' + C.bare_doi(r['url'])) in cat or ('hdl:10568/' + r['id'][3:]) in cat for r in items))
     check('assets/archive.js newest first', all(items[i - 1]['issued'] >= items[i]['issued'] for i in range(1, len(items))))
