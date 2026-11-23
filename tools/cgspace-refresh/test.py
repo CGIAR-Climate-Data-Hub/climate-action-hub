@@ -36,10 +36,14 @@ def read(*p):
 
 
 # The query
-check('query asks for Climate Action', 'f.programAccelerator=Climate%20Action,equals' in C.BASE_QUERY)
+check('query asks for the climate impact area, not one program',
+      'f.impactArea=Climate%20adaptation%20and%20mitigation,equals' in C.type_query('Report')
+      and 'programAccelerator' not in C.type_query('Report'))
+check('both spellings of the impact area are read', C.IMPACT_AREAS == ['Climate adaptation and mitigation', 'Climate adaptation & mitigation']
+      and 'f.impactArea=Climate%20adaptation%20%26%20mitigation,equals' in C.type_query('Report', C.IMPACT_AREAS[1]))
 check('query asks for open access', 'f.accessRights=Open%20Access,equals' in C.BASE_QUERY)
 check('query sorts newest first', 'sort=dcterms.issued,DESC' in C.BASE_QUERY)
-check('one query per type', C.type_query('Journal Article').endswith('&f.itemtype=Journal%20Article,equals'))
+check('one query per type and spelling', C.type_query('Journal Article').endswith('&f.itemtype=Journal%20Article,equals'))
 check('four types', [t for t, _ in C.TYPES] == ['Journal Article', 'Working Paper', 'Report', 'Brief'])
 check('limit is 300', C.LIMIT == 300)
 
@@ -77,9 +81,17 @@ ITEMS = [o['_embedded']['indexableObject'] for o in FIX['_embedded']['searchResu
 def fake(items):
     def fetch(url):
         q = parse_qs(urlparse(url).query)
+        if '/facets/programAccelerator' in url:
+            area = q['f.impactArea'][0].rsplit(',', 1)[0]
+            vals = [{'label': 'Climate Action', 'count': 5}, {'label': 'Sustainable  Farming', 'count': 2}] \
+                if area == C.IMPACT_AREAS[0] else [{'label': 'Climate Action', 'count': 1}]
+            return {'_embedded': {'values': vals}}
         want = q['f.itemtype'][0].rsplit(',', 1)[0]
+        area = q['f.impactArea'][0].rsplit(',', 1)[0]
         size, page = int(q['size'][0]), int(q['page'][0])
         hits = [i for i in items if want in [v['value'] for v in i['metadata'].get('dcterms.type', [])]]
+        if area != C.IMPACT_AREAS[0]:
+            hits = [i for i in hits if i.get('handle') == '10568/900009']  # one item also filed under the other spelling
         part = hits[page * size:(page + 1) * size]
         return {'_embedded': {'searchResult': {'_embedded': {'objects': [{'_embedded': {'indexableObject': i}} for i in part]},
                 'page': {'number': page, 'size': size, 'totalElements': len(hits), 'totalPages': -(-len(hits) // size)}}}}
@@ -87,13 +99,14 @@ def fake(items):
 
 
 found, totals = R.read_cgspace(fake(ITEMS))
-check('each type read', totals == {'Journal article': 7, 'Working paper': 1, 'Report': 1, 'Brief': 1}, totals)
+check('each type read, under both spellings', totals == {'Journal article': 7, 'Working paper': 2, 'Report': 1, 'Brief': 1}, totals)
 recs = C.select(found, cur)
 ids = [r['id'] for r in recs]
 by = {r['id']: r for r in recs}
 check('hand-picked by DOI left out, whatever its case', 'cgs900001' not in ids, ids)
 check('hand-picked by CGSpace id left out', 'cgs900007' not in ids, ids)
 check('undated left out', 'cgs900002' not in ids, ids)
+check('an item filed under both spellings listed once', ids.count('cgs900009') == 1, ids)
 check('an item under two types listed once, as the first type', ids.count('cgs900003') == 1 and by['cgs900003']['kind'] == 'Journal article', ids)
 check('newest first across types, ties to the newer handle',
       ids == ['cgs900008', 'cgs900003', 'cgs900009', 'cgs900004', 'cgs900006', 'cgs900005'], ids)
@@ -109,6 +122,34 @@ check('countries then regions, each once', by['cgs900006']['geo'] == 'Kenya, Eas
 check('three centres from one item', by['cgs900006']['centres'] == ['CIP', 'ICARDA', 'ICRISAT'], by['cgs900006']['centres'])
 check('no author names kept', not re.search(r'author|contributor"', json.dumps(recs)))
 check('record fields in a fixed order', list(recs[0].keys()) == C.FIELDS, list(recs[0].keys()))
+
+# Reading stops once older pages cannot reach the list
+calls = []
+def counting(items):
+    f = fake(items)
+    def fetch(url):
+        calls.append(url)
+        return f(url)
+    return fetch
+newer = [{'handle': '10568/6%05d' % i, 'uuid': 'r%d' % i, 'metadata': {'dc.title': [{'value': 'Invented report %d' % i}],
+         'dcterms.issued': [{'value': '2026-%02d' % (1 + i % 12)}], 'dcterms.type': [{'value': 'Report'}]}} for i in range(400)]
+older = [{'handle': '10568/5%05d' % i, 'uuid': 'b%d' % i, 'metadata': {'dc.title': [{'value': 'Invented brief %d' % i}],
+         'dcterms.issued': [{'value': '2019-%02d' % (1 + i % 12)}], 'dcterms.type': [{'value': 'Brief'}]}} for i in range(400)]
+f2, t2 = R.read_cgspace(counting(newer + older))
+brief_pages = sum(1 for u in calls if 'Brief' in u and 'and%20mitigation' in u)
+report_pages = sum(1 for u in calls if 'Report' in u and 'and%20mitigation' in u)
+check('older stream read only once', brief_pages == 1, brief_pages)
+check('newer stream read until the list is full, not to the end', 7 <= report_pages <= 8, report_pages)
+check('totals still whole', t2['Report'] == 400 and t2['Brief'] == 400, t2)
+check('the list is the newest 300', all(r['kind'] == 'Report' for r in C.select(f2, set())))
+
+# Where climate sits across CGIAR
+progs = R.read_programs(fake(ITEMS))
+check('program counts from both spellings added up, largest first, names tidied',
+      progs == [{'name': 'Climate Action', 'count': 6}, {'name': 'Sustainable Farming', 'count': 2}], progs)
+check('facet query is the climate impact area', 'f.impactArea=Climate%20adaptation%20and%20mitigation,equals' in C.programs_query(C.IMPACT_AREAS[0]))
+withp = C.render(recs[:2], '2026-11-23', progs, '2026-11-23')
+check('programs written and read back', C.parse(withp)['programs'] == progs and C.parse(withp)['programsRead'] == '2026-11-23')
 
 # The limit
 many = []
@@ -150,6 +191,7 @@ try:
     arch = os.path.join(tmp, 'assets', 'archive.js')
     first_text = read(arch)
     check('first run writes the list', s1['changed'] and s1['kept'] == 156 and C.parse(first_text)['read'] == '2026-11-18', s1)
+    check('first run writes the program counts', C.parse(first_text)['programs'][0] == {'name': 'Climate Action', 'count': 6})
     s2 = R.run(tmp, fetch=fake(bulk), today='2026-11-25')
     check('second run, nothing new: file left alone', not s2['changed'] and read(arch) == first_text, s2)
     newer = bulk + [{'handle': '10568/999999', 'uuid': 'n1', 'metadata': {'dc.title': [{'value': 'Invented new brief'}],
@@ -180,7 +222,10 @@ site = C.parse(live)
 check('assets/archive.js reads', bool(site))
 if site:
     items = site['items']
-    check("assets/archive.js is in the refresh's own format", C.render(items, site['read']) == live)
+    check("assets/archive.js is in the refresh's own format",
+          C.render(items, site['read'], site.get('programs'), site.get('programsRead')) == live)
+    check('assets/archive.js carries program counts', bool(site.get('programs')) and all(
+        p['name'] and p['count'] > 0 for p in site['programs']))
     check('assets/archive.js within the limit', C.MIN_SANE <= len(items) <= C.LIMIT, len(items))
     check('assets/archive.js ids unique', len({r['id'] for r in items}) == len(items))
     check('assets/archive.js items complete', all(r['id'] and r['title'] and r['kind'] and re.match(r'^[0-9]{4}', r['issued'])

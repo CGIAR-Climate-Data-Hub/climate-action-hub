@@ -3,23 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page not found | CGIAR Climate Action Hub</title>
+<title>Page not found | CGIAR Climate Hub</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet" media="all" onerror="this.remove()">
-<link rel="stylesheet" href="/climate-action-hub/assets/site.css">
-<link rel="icon" type="image/png" href="/climate-action-hub/assets/favicon.png">
-<link rel="apple-touch-icon" href="/climate-action-hub/assets/apple-touch-icon.png">
+<script>
+  /* GitHub Pages serves this page for any missing address, at any depth, so its links
+     cannot be relative. On cgiar-climate-data-hub.github.io the site lives under
+     /climate-action-hub/; on a domain of its own it lives at the root. Work out which,
+     load the styles from there, and (at the end of the page) point every link there. */
+  var HUB_BASE = location.pathname.indexOf('/climate-action-hub/') === 0 ? '/climate-action-hub/' : '/';
+  document.write('<link rel="stylesheet" href="' + HUB_BASE + 'assets/site.css">' +
+    '<link rel="icon" type="image/png" href="' + HUB_BASE + 'assets/favicon.png">' +
+    '<link rel="apple-touch-icon" href="' + HUB_BASE + 'assets/apple-touch-icon.png">');
+</script>
+<noscript><link rel="stylesheet" href="/climate-action-hub/assets/site.css"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <header>
   <div class="header-inner">
-    <a href="/climate-action-hub/index.html" class="brand-link" aria-label="CGIAR Climate Action Hub home">
-      <img src="/climate-action-hub/assets/cgiar-logo.png" alt="" height="34">
-      <span class="brand-name">CGIAR Climate Action Hub</span>
+    <a href="/climate-action-hub/index.html" class="brand-link" aria-label="CGIAR Climate Hub home">
+      <img data-src="assets/cgiar-logo.png" alt="" height="34">
+      <span class="brand-name">CGIAR Climate Hub</span>
     </a>
   </div>
 </header>
@@ -67,9 +75,9 @@
     <h2 class="sr-only">Site links</h2>
     <div class="footer-top">
       <div>
-        <img src="/climate-action-hub/assets/cgiar-logo.png" alt="CGIAR Climate Action" height="42">
-        <p>Publications, tools and methods for the CGIAR Climate Action Science Program, hand-picked and
-        linked to where each is published.</p>
+        <img data-src="assets/cgiar-logo.png" alt="CGIAR Climate Action" height="42">
+        <p>Publications, tools and methods on climate from across CGIAR, hand-picked and linked to where
+        each is published.</p>
       </div>
       <div class="footer-col">
         <h3>Explore</h3>
@@ -84,7 +92,7 @@
         <a href="https://gardian.cgiar.org/" target="_blank" rel="noopener">Gardian &#8599;</a>
       </div>
       <div class="footer-col">
-        <h3>Program</h3>
+        <h3>Climate at CGIAR</h3>
         <a href="https://www.cgiar.org/cgiar-research-portfolio-2025-2030/climate-action" target="_blank" rel="noopener">CGIAR Climate Action &#8599;</a>
         <a href="https://www.linkedin.com/showcase/cgiar-climate/" target="_blank" rel="noopener">Climate Action on LinkedIn &#8599;</a>
         <a href="https://www.cgiar.org/funders" target="_blank" rel="noopener">CGIAR Trust Fund Contributors &#8599;</a>
@@ -92,7 +100,7 @@
       <div class="footer-col">
         <h3>Contact</h3>
         <a href="mailto:climate@cgiar.org">climate@cgiar.org</a>
-        <a href="/climate-action-hub/about.html#contact">How to reach the program</a>
+        <a href="/climate-action-hub/about.html#contact">Getting in touch</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -102,5 +110,20 @@
   </div>
 </footer>
 
+<script>
+  /* Images are named relative to the site and given their address here, so no request
+     goes to the wrong place first. */
+  Array.prototype.forEach.call(document.querySelectorAll('img[data-src]'), function (img) {
+    img.setAttribute('src', HUB_BASE + img.getAttribute('data-src'));
+  });
+  if (HUB_BASE !== '/climate-action-hub/') {
+    Array.prototype.forEach.call(document.querySelectorAll('[href], [src], [action]'), function (el) {
+      ['href', 'src', 'action'].forEach(function (a) {
+        var v = el.getAttribute(a);
+        if (v && v.indexOf('/climate-action-hub/') === 0) el.setAttribute(a, HUB_BASE + v.slice('/climate-action-hub/'.length));
+      });
+    });
+  }
+</script>
 </body>
 </html>

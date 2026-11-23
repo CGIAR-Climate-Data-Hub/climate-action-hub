@@ -7,11 +7,14 @@ import json
 import re
 from urllib.parse import quote
 
-# What is read: open-access research outputs tagged Climate Action on CGSpace.
+# What is read: open-access research outputs that CGSpace files under CGIAR's climate
+# adaptation and mitigation impact area, from any CGIAR program (changed 23/11/2026 from
+# the Climate Action program tag, when the site became the CGIAR Climate Hub).
 API = 'https://cgspace.cgiar.org/server/api/discover/search/objects'
 BASE_QUERY = ('dsoType=ITEM&sort=dcterms.issued,DESC'
-              '&f.programAccelerator=Climate%20Action,equals'
               '&f.accessRights=Open%20Access,equals')
+# CGSpace spells the impact area two ways (8,005 and 87 items on 23/11/2026); both are read.
+IMPACT_AREAS = ['Climate adaptation and mitigation', 'Climate adaptation & mitigation']
 # CGSpace type, and the label the site shows. CGSpace combines two filters on the
 # same field with AND, so each type is read with its own query.
 TYPES = [
@@ -26,8 +29,30 @@ MAX_TAGS = 10
 FIELDS = ['id', 'kind', 'title', 'issued', 'source', 'url', 'centres', 'geo', 'tags']
 
 
-def type_query(cgspace_type):
-    return BASE_QUERY + '&f.itemtype=' + quote(cgspace_type) + ',equals'
+# Where climate sits across CGIAR: how many CGSpace records under the impact area carry
+# each science program or accelerator (all types and access levels; a record can carry
+# more than one). Shown on the About page.
+FACET_API = 'https://cgspace.cgiar.org/server/api/discover/facets/programAccelerator'
+
+
+def programs_query(impact_area):
+    return 'dsoType=ITEM&size=50&f.impactArea=' + quote(impact_area) + ',equals'
+
+
+def merge_programs(facet_answers):
+    """Adds up the program counts from each spelling's facet answer, largest first."""
+    total = {}
+    for data in facet_answers:
+        for v in (((data or {}).get('_embedded') or {}).get('values') or []):
+            name = _sp(v.get('label'))
+            if name:
+                total[name] = total.get(name, 0) + int(v.get('count') or 0)
+    return [{'name': n, 'count': c} for n, c in sorted(total.items(), key=lambda kv: (-kv[1], kv[0]))]
+
+
+def type_query(cgspace_type, impact_area=IMPACT_AREAS[0]):
+    return (BASE_QUERY + '&f.impactArea=' + quote(impact_area) + ',equals'
+            + '&f.itemtype=' + quote(cgspace_type) + ',equals')
 
 
 # CGSpace affiliation names that belong to a CGIAR centre, with the short name the
@@ -185,7 +210,7 @@ def select(found, curated):
 
 
 HEADER = '\n'.join([
-    '/* CGIAR Climate Action Hub - CGSpace research outputs for search',
+    '/* CGIAR Climate Hub - CGSpace research outputs for search',
     ' * ============================================================================',
     ' * Written by tools/cgspace-refresh/refresh.py. Please do not edit by hand: each',
     ' * Monday the refresh reads CGSpace again and, when the list has changed,',
@@ -193,12 +218,15 @@ HEADER = '\n'.join([
     ' * site until someone merges it.',
     ' *',
     ' * The newest open-access journal articles, working papers, reports and briefs',
-    ' * tagged Climate Action on CGSpace, leaving out any already hand-picked in',
+    ' * that CGSpace files under CGIAR\'s climate adaptation and mitigation impact',
+    ' * area, from any CGIAR program, leaving out any already hand-picked in',
     ' * catalogue.js. They appear in search results on Publications & Tools, after',
     ' * the hand-picked items. CGSpace records no area of work, so they are not',
     ' * counted under one. Centres are the CGIAR centres among the authors\'',
     ' * affiliations on each record; author names are not kept. "read" is the day',
-    ' * CGSpace was last read for this list.',
+    ' * CGSpace was last read for this list. "programs" counts the CGSpace records',
+    ' * under the impact area that carry each science program or accelerator (a',
+    ' * record can carry several), as read on "programsRead"; the About page shows it.',
     ' * ========================================================================== */',
     'window.HUB_ARCHIVE = ',
 ])
@@ -209,9 +237,14 @@ def _js(obj):
     return json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
 
 
-def render(records, read_date):
+def render(records, read_date, programs=None, programs_read=None):
+    head = ''
+    if programs:
+        head = ('  "programsRead": ' + _js(programs_read or read_date) + ',\n'
+                + '  "programs": [\n' + ',\n'.join('    ' + _js(p) for p in programs) + '\n  ],\n')
     return (HEADER + '{\n'
             + '  "read": ' + _js(read_date) + ',\n'
+            + head
             + '  "items": [\n'
             + ',\n'.join('    ' + _js(r) for r in records)
             + '\n  ]\n};\n')

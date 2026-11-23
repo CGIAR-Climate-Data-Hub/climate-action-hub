@@ -1,4 +1,4 @@
-/* CGIAR Climate Action Hub - CGSpace research outputs for search
+/* CGIAR Climate Hub - CGSpace research outputs for search
  * ============================================================================
  * Written by tools/cgspace-refresh/refresh.py. Please do not edit by hand: each
  * Monday the refresh reads CGSpace again and, when the list has changed,
@@ -6,15 +6,34 @@
  * site until someone merges it.
  *
  * The newest open-access journal articles, working papers, reports and briefs
- * tagged Climate Action on CGSpace, leaving out any already hand-picked in
+ * that CGSpace files under CGIAR's climate adaptation and mitigation impact
+ * area, from any CGIAR program, leaving out any already hand-picked in
  * catalogue.js. They appear in search results on Publications & Tools, after
  * the hand-picked items. CGSpace records no area of work, so they are not
  * counted under one. Centres are the CGIAR centres among the authors'
  * affiliations on each record; author names are not kept. "read" is the day
- * CGSpace was last read for this list.
+ * CGSpace was last read for this list. "programs" counts the CGSpace records
+ * under the impact area that carry each science program or accelerator (a
+ * record can carry several), as read on "programsRead"; the About page shows it.
  * ========================================================================== */
 window.HUB_ARCHIVE = {
   "read": "2026-11-18",
+  "programsRead": "2026-11-23",
+  "programs": [
+    {"name":"Climate Action","count":841},
+    {"name":"Scaling for Impact","count":365},
+    {"name":"Sustainable Farming","count":213},
+    {"name":"Policy Innovations","count":203},
+    {"name":"Multifunctional Landscapes","count":194},
+    {"name":"Sustainable Animal and Aquatic Foods","count":180},
+    {"name":"Gender Equality and Inclusion","count":165},
+    {"name":"Food Frontiers and Security","count":142},
+    {"name":"Breeding for Tomorrow","count":102},
+    {"name":"Digital Transformation","count":86},
+    {"name":"Genebanks","count":36},
+    {"name":"Better Diets and Nutrition","count":24},
+    {"name":"Capacity Sharing","count":15}
+  ],
   "items": [
     {"id":"cgs185496","kind":"Journal article","title":"Artificial intelligence for decoding diet-gut microbiome-health interactions: A systematic scoping review","issued":"2026-12","source":"Food Nutrition","url":"https://doi.org/10.1016/j.fnutr.2026.100087","centres":["IFPRI"],"geo":"","tags":["artificial intelligence","digital technology","diet","microbiomes","health","models","microbial properties"]},
     {"id":"cgs185472","kind":"Journal article","title":"Beyond one-size-fits-all: Using farming typologies to navigate the NUE-Yield-GHG nexus in Indian cereal systems","issued":"2026-12","source":"Agricultural Systems","url":"https://doi.org/10.1016/j.agsy.2026.104928","centres":["CIMMYT"],"geo":"India, Southern Asia","tags":["greenhouse gases","emission","farm typology","nitrogen-use efficiency","soil","nutrient management"]},

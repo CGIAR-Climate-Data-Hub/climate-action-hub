@@ -1,10 +1,12 @@
 # CGSpace refresh
 
 A small program that lives in this repository and, once a week on GitHub, reads the
-newest open-access research outputs tagged Climate Action on
-[CGSpace](https://cgspace.cgiar.org/) and keeps the list the site searches up to date.
+newest open-access research outputs that [CGSpace](https://cgspace.cgiar.org/) files under
+CGIAR's climate adaptation and mitigation impact area, from any CGIAR program, and keeps the
+list the site searches up to date.
 It proposes; a person decides. Built 17/11/2026, widened to 300 items of four types
-on 18/11/2026.
+on 18/11/2026, and moved from the Climate Action program tag to CGIAR's climate impact area on
+23/11/2026.
 
 ## What the site does with the list
 
@@ -12,7 +14,7 @@ The Publications & Tools page shows the hand-picked items in `assets/catalogue.j
 its result count says that a search reaches more ("37 hand-picked resources. Search to
 include 300 more from CGSpace."). When someone searches, the results also include
 matches from `assets/archive.js`: the newest 300 open-access journal articles, working
-papers, reports and briefs tagged Climate Action on CGSpace, leaving out any already
+papers, reports and briefs under CGIAR's climate impact area on CGSpace, leaving out any already
 hand-picked. They are listed after the hand-picked results, under "From CGSpace", each
 labelled with its type and linking to its DOI, or to CGSpace when it has none. They are
 never listed without a search, and they are not counted under an area of work, because
@@ -28,7 +30,8 @@ At 04:23 UTC (07:23 in Nairobi), GitHub runs `.github/workflows/cgspace-refresh.
 
 1. runs the offline checks in `test.py`, and stops if any fails;
 2. asks CGSpace's search for each of the four types in turn (CGSpace cannot combine
-   them in one search), open access, tagged Climate Action, newest first, and keeps the
+   them in one search), open access, under the climate adaptation and mitigation impact area
+   (both of the spellings CGSpace uses), newest first, and keeps the
    newest 300 overall that have a date and are not already hand-picked;
 3. if that list differs from `assets/archive.js`, rewrites the file and opens a pull
    request titled "CGSpace refresh: N added, N dropped, ...", with the added and dropped
@@ -78,7 +81,7 @@ says so by email. Re-enable it from the Actions tab.
   (or, from a computer, a person publishing).
 - **It does not write descriptions or choose areas of work.** Those stay with the
   hand-picked items.
-- **It does not judge relevance.** It trusts CGSpace's Climate Action tag and type. Some
+- **It does not judge relevance.** It trusts CGSpace's impact area and type. Some
   tagged items are only loosely about climate; the pull request is the place to notice.
 - **It does not ask much of CGSpace.** About ten requests a week, identified as
   `CGIAR-Climate-Action-Hub-cgspace-refresh`.

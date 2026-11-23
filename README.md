@@ -1,6 +1,6 @@
-# CGIAR Climate Action Hub
+# CGIAR Climate Hub
 
-Hand-picked publications, tools and methods for the CGIAR Climate Action Science Program, each linked to where it is published. Datasets are not listed here: they are on the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/), and every page points to it, so the two sites do not catalogue the same things.
+Hand-picked publications, tools and methods on climate from across CGIAR, each linked to where it is published. Renamed from "CGIAR Climate Action Hub" on 23/11/2026, when its scope widened from the Climate Action Science Program to climate work across CGIAR; the program's targets and five areas of work stay on the site, labelled as Climate Action's, and the web address is unchanged. Datasets are not listed here: they are on the [Climate Data Hub](https://cgiar-climate-data-hub.github.io/), and every page points to it, so the two sites do not catalogue the same things.
 
 This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. There is no build step, no server, no sign-in and no tracking. Open `index.html` in a browser and it works.
 
@@ -9,8 +9,8 @@ This is the beta of 17/11/2026: three pages of plain HTML, CSS and JavaScript. T
 | Page | Contents |
 |---|---|
 | `index.html` (Home) | Photograph, main heading and search, the program's published targets, three ways in (publications, tools and methods, and data on the Climate Data Hub), the five areas of work, the Climate Data Hub call-out, four featured tools, selected publications |
-| `resources.html` (Publications & Tools) | The whole catalogue behind one search field and two filters, resource type and area of work. A search also reaches the newest 300 open-access Climate Action research outputs on CGSpace (journal articles, working papers, reports and briefs), listed after the hand-picked results. The result count says so before anyone searches |
-| `about.html` (About & Contact) | The program, quoted from cgiar.org, a count of what is catalogued (worked out when the page loads), and how to get in touch |
+| `resources.html` (Publications & Tools) | The whole catalogue behind one search field and two filters, resource type and area of work. A search also reaches the newest 300 open-access research outputs on CGSpace under CGIAR's climate adaptation and mitigation impact area, from any CGIAR program (journal articles, working papers, reports and briefs), listed after the hand-picked results. The result count says so before anyone searches |
+| `about.html` (About & Contact) | What the site is; climate at CGIAR, with a chart of where CGSpace climate research comes from by program or accelerator (counts refreshed with the CGSpace list); the Climate Action program, quoted from cgiar.org, with its targets and areas of work; a count of what is catalogued (worked out when the page loads); and how to get in touch |
 
 The layout follows [gender.cgiar.org](https://gender.cgiar.org/): the logo in a header, a tab bar beneath it, an image-led hero and plain sections down the page.
 
@@ -24,10 +24,10 @@ assets/catalogue.js    every hand-picked item, the five areas of work and the ta
 assets/archive.js      the CGSpace research outputs that search also reaches; written by the refresh, not by hand
 assets/app.js          puts the catalogue on the pages
 assets/site.css        all the styles
-assets/cgiar-logo.png  the CGIAR Climate Action logo
+assets/cgiar-logo.png  the CGIAR Climate Action logo, kept until an approved logo for the wider site is supplied
 assets/img/            four photographs by John Choptiany (location data removed): two on Home, one each on Publications & Tools and About
 assets/favicon.png, apple-touch-icon.png, social-card.jpg   tab icon, phone icon and the preview card for shared links
-404.html               the page shown for a mistyped address (its links are absolute, so it works at any depth)
+404.html               the page shown for a mistyped address (it works out where it is served from, so it works at any depth and on any domain)
 tools/cgspace-refresh/ the weekly refresh of archive.js, with its own README
 .github/workflows/     the schedule that runs it on GitHub each Monday
 ```
@@ -44,6 +44,17 @@ tools/cgspace-refresh/ the weekly refresh of archive.js, with its own README
 ## Publishing on GitHub Pages
 
 In the repository, go to Settings, then Pages, and choose "Deploy from a branch" with `main` and `/ (root)`. The site then appears at `https://cgiar-climate-data-hub.github.io/climate-action-hub/`. Every link inside the site is relative, so it works at that address or at a custom domain. The empty `.nojekyll` file is there so that GitHub serves the files exactly as they are.
+
+## Moving to an address of its own
+
+The site works at any address: every link inside the pages is relative, and the 404 page works out where it is being served from (tested 23/11/2026 both under `/climate-action-hub/` and at the root of a domain). To serve it at, say, `climate.cgiar.org`, if that is the address chosen:
+
+1. CGIAR IT adds a DNS record: a `CNAME` from the chosen name to `cgiar-climate-data-hub.github.io`.
+2. An owner of the CGIAR-Climate-Data-Hub organisation verifies the domain for the organisation (organisation Settings, Pages, "Add a domain"), so that no one else can claim it.
+3. In this repository, Settings, Pages, "Custom domain": enter the name and save. GitHub commits a `CNAME` file to `main`; the publish script takes that commit in before its next push. Tick "Enforce HTTPS" once GitHub has issued the certificate.
+4. Replace `https://cgiar-climate-data-hub.github.io/climate-action-hub/` with the new address in the `og:url` and `og:image` lines of index.html, resources.html and about.html, and remove the `noindex` line from each page (see below).
+
+The github.io address then forwards to the new one. The Climate Data Hub is the organisation's own site (`cgiar-climate-data-hub.github.io`): if it is given a domain first, this site moves under that domain at `/climate-action-hub/` until it has one of its own, and it works there too.
 
 ## Before the site is promoted
 

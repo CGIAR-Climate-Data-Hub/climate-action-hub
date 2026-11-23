@@ -1,4 +1,4 @@
-/* CGIAR Climate Action Hub - one script for the three pages
+/* CGIAR Climate Hub - one script for the three pages
  * ============================================================================
  * Each block looks for its own place on the page and does nothing if the page
  * does not have it. Nothing here needs a server, a sign-in or any service other
@@ -23,8 +23,9 @@
     return m ? m[3] + '/' + m[2] + '/' + m[1] : '';
   };
 
-  /* The newest open-access research outputs tagged Climate Action on CGSpace
-   * (journal articles, working papers, reports and briefs), from archive.js. They
+  /* The newest open-access research outputs that CGSpace files under CGIAR's climate
+   * adaptation and mitigation impact area (journal articles, working papers, reports
+   * and briefs, from any CGIAR program), from archive.js. They
    * are searched, never listed on their own, and come after the hand-picked items.
    * CGSpace records no area of work, so they have none here. */
   const ARCHIVE_READ = (window.HUB_ARCHIVE && window.HUB_ARCHIVE.read) || '';
@@ -254,7 +255,7 @@
       if (more.length) {
         html += '<div class="morehead"><h2>From CGSpace</h2>' +
           '<p>' + more.length + (more.length === 1 ? ' match' : ' matches') + ' in the ' + ARCHIVE.length +
-          ' most recent open-access journal articles, working papers, reports and briefs tagged Climate Action on CGSpace' +
+          ' most recent open-access journal articles, working papers, reports and briefs filed under CGIAR&rsquo;s climate adaptation and mitigation impact area on CGSpace' +
           (ARCHIVE_READ ? ' (list read on ' + dmy(ARCHIVE_READ) + ')' : '') + '. Links go to the DOI, or to CGSpace when an item has none.</p></div>' +
           '<div class="rows">' + more.map(archiveRowHTML).join('') + '</div>';
       } else if (outsideArea) {
@@ -304,6 +305,35 @@
     H.all.concat(ARCHIVE).forEach(function (i) { (i.centres || []).forEach(function (c) { seen[c] = true; }); });
     return Object.keys(seen).sort(function (a, b) { return a.localeCompare(b); });
   }
+
+  /* ---------- About: where climate sits across CGIAR ----------
+   * CGSpace records under the climate adaptation and mitigation impact area, by
+   * science program or accelerator, from archive.js (the weekly refresh updates
+   * them). One series in one hue; each bar opens those records on CGSpace. */
+  (function climatePrograms() {
+    const host = $('#climatePrograms');
+    if (!host) return;
+    const A = window.HUB_ARCHIVE || {};
+    const P = A.programs || [];
+    if (!P.length) { host.parentNode.removeChild(host); return; }
+    const max = P[0].count;
+    const fmt = function (n) { return Number(n).toLocaleString('en-GB'); };
+    const link = function (name) {
+      return 'https://cgspace.cgiar.org/search?f.impactArea=' + encodeURIComponent('Climate adaptation and mitigation') +
+        ',equals&f.programAccelerator=' + encodeURIComponent(name) + ',equals';
+    };
+    host.innerHTML = '<ul class="progbars">' + P.map(function (p) {
+      const w = Math.max(1, Math.round(p.count / max * 100));
+      return '<li><a href="' + esc(link(p.name)) + '" target="_blank" rel="noopener" title="' +
+        esc(p.name + ': ' + fmt(p.count) + ' records on CGSpace') + '">' +
+        '<span class="progbar-name">' + esc(p.name) + '</span>' +
+        '<span class="progbar-track" aria-hidden="true"><span class="progbar-fill" style="width:' + w + '%"></span></span>' +
+        '<span class="progbar-n">' + fmt(p.count) + '</span></a></li>';
+    }).join('') + '</ul>' +
+    '<p class="src">CGSpace records under CGIAR&rsquo;s climate adaptation and mitigation impact area that name each science ' +
+      'program or accelerator, as read on ' + dmy(A.programsRead || A.read) + '. A record can name more than one. ' +
+      'Each bar opens those records on CGSpace.</p>';
+  })();
 
   /* ---------- Any stated catalogue size is recounted at load ---------- */
   (function corpusSize() {

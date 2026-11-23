@@ -1,4 +1,4 @@
-/* CGIAR Climate Action Hub - the catalogue
+/* CGIAR Climate Hub - the catalogue
  * ============================================================================
  * Every item on the site comes from this file, and every count on the site is
  * worked out from it when a page loads, so nothing needs updating by hand.
